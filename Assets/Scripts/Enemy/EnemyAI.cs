@@ -25,6 +25,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float walkPointRange;
     [SerializeField] private float povRange;
     [SerializeField] private float attackRange;
+
+    [Header("")]
     
     private bool playerInPovRange, playerInAttackRange;
     private bool isAlreadyAttacked;
@@ -46,6 +48,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         
+
     }
 
     void Update()
@@ -69,14 +72,20 @@ public class EnemyAI : MonoBehaviour
         if (!isWalkPointSet) SearchWalkPoint();
 
         if (isWalkPointSet)
+        {
+            //Debug.Log($"Setting agent destination to walkPoint: {walkPoint}");
             agent.SetDestination(walkPoint);
+        }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+        {
             isWalkPointSet = false;
+            Debug.Log("Reached walk point.");
+        }
     }
+
     private void SearchWalkPoint()
     {
         //Calculate random point in range
@@ -92,6 +101,28 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+    }
+    private void OnEnable()
+    {
+        Debug.Log("EnemyAI: Subscribed to Collectibles.OnCollected");
+
+        Collectables.OnCollected += HandleCollectibleCollected;
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("EnemyAI: Unsubscribed from Collectibles.OnCollected");
+
+        Collectables.OnCollected -= HandleCollectibleCollected;
+    }
+
+    private void HandleCollectibleCollected(Transform collectible)
+    {
+        // Set the new walk point to the collectible's position
+        walkPoint = collectible.position;
+        isWalkPointSet = true;
+
+        Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
     }
 
     private void AttackPlayer()
@@ -112,7 +143,7 @@ public class EnemyAI : MonoBehaviour
     {
         isAlreadyAttacked = false;
     }
-
+   
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -120,6 +151,11 @@ public class EnemyAI : MonoBehaviour
         
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, povRange);
+        if (isWalkPointSet)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(walkPoint, 0.5f);
+        }
     }
     #endregion
 
