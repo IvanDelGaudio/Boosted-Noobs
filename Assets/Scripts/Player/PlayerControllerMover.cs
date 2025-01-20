@@ -21,6 +21,8 @@ namespace PlayerControl
         [Min(0.25f)]
         private float speed = 5.0f;
         [SerializeField]
+        private float Runspeed = 5.0f;
+        [SerializeField]
         private OrientMode orientMode = OrientMode.Movement;
         private float orientToReachTime = 0.5f;
         private Vector3 orientToCurrentSpeed = Vector3.zero;
@@ -59,8 +61,19 @@ namespace PlayerControl
             moveDirection.y = 0.0f;
             moveDirection.Normalize();
             moveDirection *= moveMagnitude;
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                speed= speed * Runspeed;
+                Debug.Log("Is run");
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = speed / Runspeed;
+                Debug.Log("Is not run");
+            }
 
             Move(moveDirection * speed);
+
             if (orientMode != OrientMode.None)
             {
                 Quaternion targetRotation = transform.rotation;
@@ -93,6 +106,13 @@ namespace PlayerControl
                 characterController.Move(direction * Time.deltaTime);
             
         }
+
+        public void Run()
+        {
+
+        }
+
+
         private static Quaternion SmoothDampRotation(Quaternion from, Quaternion to, ref Vector3 currentVelocity, float smoothTime)
         {
             Vector3 fromEuler = from.eulerAngles;
