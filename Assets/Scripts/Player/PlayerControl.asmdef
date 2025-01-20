@@ -1,0 +1,16 @@
+{
+    "name": "PlayerControl",
+    "rootNamespace": "PlayerControl",
+    "references": [
+        "GUID:644b2b274b5f0764ca3148268d6b80df"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
