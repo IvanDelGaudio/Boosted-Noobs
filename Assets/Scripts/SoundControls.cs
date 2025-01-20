@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -20,25 +21,25 @@ namespace Sound
         #region Lifecycle
         #endregion
         #region Public Methods       
-        public AudioSource Play2DSound(AudioClip clip, AudioMixerGroup mixerGroup, bool persistent)
+        public AudioSource Play2DSound(AudioClip clip, AudioMixerGroup mixerGroup, bool persistent = false)
         {
-            AudioSource source = PlayClipOnce(clip, mixerGroup);
+            AudioSource source = PlayClipOnce(clip, mixerGroup,persistent);
 
             if (clip != null)
                 source.spatialBlend = 0.0f;
-
+            source.loop = persistent;
             return source;
         }
         public AudioSource Play3DSound(AudioClip clip, AudioMixerGroup mixerGroup, Vector3 position, bool persistent = false)
         {
-            AudioSource source = PlayClipOnce(clip, mixerGroup);
+            AudioSource source = PlayClipOnce(clip, mixerGroup,persistent);
 
             if (clip != null)
             {
                 source.spatialBlend = 1.0f;
                 source.transform.position = position;
             }
-
+            source.loop = persistent;
             return source;
         }
         public AudioSource PlayMusic(AudioClip clip, AudioMixerGroup mixerGroup)
@@ -58,17 +59,17 @@ namespace Sound
                 return null;
 
             GameObject audioSourceGO = new GameObject($"Audio Souce {clip.name}");
-            AudioSource audioSorce = audioSourceGO.AddComponent<AudioSource>();
+            AudioSource audioSource = audioSourceGO.AddComponent<AudioSource>();
 
             if (loop == false)
             {
-                Object.Destroy(audioSorce,clip.length);
+                Object.Destroy(audioSourceGO,clip.length);
             }
-            return audioSorce;
+            return audioSource;
         }
-        private AudioSource PlayClipOnce(AudioClip clip, AudioMixerGroup output)
+        private AudioSource PlayClipOnce(AudioClip clip, AudioMixerGroup output,bool persistent=false)
         {
-            AudioSource source = CreateAudioSource(clip, true);
+            AudioSource source = CreateAudioSource(clip, persistent);
 
             if (clip == null)
                 return null;
