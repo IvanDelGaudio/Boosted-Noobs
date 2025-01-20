@@ -26,8 +26,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float povRange;
     [SerializeField] private float attackRange;
 
-    [Header("")]
-    
     private bool playerInPovRange, playerInAttackRange;
     private bool isAlreadyAttacked;
     private bool isWalkPointSet;
