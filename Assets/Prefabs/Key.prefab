@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 4148064880842268931}
   - component: {fileID: 4624131489176559526}
   - component: {fileID: 5271229096285942449}
-  - component: {fileID: 8423608833296135823}
-  - component: {fileID: 8896092901251688121}
   m_Layer: 0
   m_Name: Key
   m_TagString: Untagged
@@ -107,29 +105,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8423608833296135823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291886508986958826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af487d728e395624ba9228725a90dcd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 8896092901251688121}
---- !u!114 &8896092901251688121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291886508986958826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef9ef6ebec776d43bd7d7bbbb1806af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: Key pass

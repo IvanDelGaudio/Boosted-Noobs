@@ -19,35 +19,31 @@ namespace PlayerControl
 
         public void AddItem(Item itemToAdd)
         {
-            bool itemExists = false;
-
-            foreach (Item item in items)
-            {
-                if (item.name == itemToAdd.name)
-                {
-                    itemExists = true;
-                    break;
-                }
-            }
-            if (!itemExists)
-            {
+            //if (items.Contains(itemToAdd))
+            
                 items.Add(itemToAdd);
-            }
-            Debug.Log(" " + itemToAdd.name + " added to inventory.");
+            
+            Debug.Log(itemToAdd + " added to inventory.");
         }
 
         public void RemoveItem(Item itemToRemove)
         {
-            foreach (var item in items)
+            if (items.Contains(itemToRemove))
             {
-                if (item.name == itemToRemove.name)
-                {
-                    
-                 items.Remove(itemToRemove);
-                }
+                items.Remove(itemToRemove);
             }
-            Debug.Log(" " + itemToRemove.name + "removed from inventory.");
+            Debug.Log(itemToRemove + " removed to inventory.");
+           
         }
+
+        public enum Item 
+        {
+            None,
+            KeyCardRed,
+            KeyCardBlue,
+            KeyCardGreen
+        }
+
     }
 
 }

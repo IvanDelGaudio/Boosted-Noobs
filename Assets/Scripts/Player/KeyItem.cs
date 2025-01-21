@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace PlayerControl
 {
-    public class Pick : MonoBehaviour
+    public class KeyItem : MonoBehaviour
     {
-        public Item item = new Item("Item Name");
+        [SerializeField]
+        Inventory.Item item;
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {

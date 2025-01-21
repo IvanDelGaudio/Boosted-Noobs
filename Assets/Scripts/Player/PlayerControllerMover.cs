@@ -74,7 +74,21 @@ namespace PlayerControl
 
             Move(moveDirection * speed);
 
-            if (orientMode != OrientMode.None)
+
+
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+
+
+
+            }
+
+
+
+
+
+
+                if (orientMode != OrientMode.None)
             {
                 Quaternion targetRotation = transform.rotation;
                 switch (orientMode)
