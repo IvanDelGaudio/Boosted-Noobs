@@ -1,13 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-
-namespace Sound
-{
     public class BGM : SoundControls
     {
         #region Public Variables
@@ -15,16 +11,11 @@ namespace Sound
         private AudioSource audioSource;
         public AudioMixerGroup mixerGroup;
         public AudioClip clip;
-        #endregion
-        #region Private Variables
-        SoundControls sourceControls;
-        #endregion
-        #region Lifecycle
-        private void Awake()
-        {
-            sourceControls = GameObject.Find("SoundManager").GetComponent<SoundControls>();
-        }
-        private void Start()
+    #endregion
+    #region Private Variables
+    #endregion
+    #region Lifecycle
+    private void Start()
         {
             PlayBGM();
         }
@@ -45,7 +36,7 @@ namespace Sound
         {
             if(audioSource != null) 
                 return;
-            audioSource = sourceControls.PlayMusic(clip, mixerGroup);
+            audioSource = PlayMusic(clip, mixerGroup);
         }
         public void StopBGM()
         {
@@ -64,4 +55,3 @@ namespace Sound
         #region Private Methods
         #endregion
     }
-}

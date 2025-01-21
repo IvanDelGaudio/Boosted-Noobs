@@ -6,22 +6,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 
-
-namespace Sound
+public class SoundControls : MonoBehaviour
 {
-    public class SoundControls : MonoBehaviour
-    {
-        #region Public Variables
-        #endregion
-        #region Private Variables
-        private bool isSoundtrackPaused = false;
-        private bool isSoundtrackPlaying = false;
-        private AudioSource soundtrackSource;
-        #endregion
-        #region Lifecycle
-        #endregion
-        #region Public Methods       
-        public AudioSource Play2DSound(AudioClip clip, AudioMixerGroup mixerGroup, bool persistent = false)
+#region Public Variables
+#endregion
+#region Private Variables
+private bool isSoundtrackPaused = false;
+private bool isSoundtrackPlaying = false;
+private AudioSource soundtrackSource;
+#endregion
+#region Lifecycle
+#endregion
+#region Public Methods       
+    public AudioSource Play2DSound(AudioClip clip, AudioMixerGroup mixerGroup, bool persistent = false)
         {
             AudioSource source = PlayClipOnce(clip, mixerGroup,persistent);
 
@@ -30,7 +27,7 @@ namespace Sound
             source.loop = persistent;
             return source;
         }
-        public AudioSource Play3DSound(AudioClip clip, AudioMixerGroup mixerGroup, Vector3 position, bool persistent = false)
+    public AudioSource Play3DSound(AudioClip clip, AudioMixerGroup mixerGroup, Vector3 position, bool persistent = false)
         {
             AudioSource source = PlayClipOnce(clip, mixerGroup,persistent);
 
@@ -42,7 +39,7 @@ namespace Sound
             source.loop = persistent;
             return source;
         }
-        public AudioSource PlayMusic(AudioClip clip, AudioMixerGroup mixerGroup)
+    public AudioSource PlayMusic(AudioClip clip, AudioMixerGroup mixerGroup)
         {
             AudioSource source = Play2DSound(clip, mixerGroup, true);
 
@@ -53,7 +50,7 @@ namespace Sound
         }
         #endregion
         #region Private Methods
-        private AudioSource CreateAudioSource(AudioClip clip, bool loop)
+    private AudioSource CreateAudioSource(AudioClip clip, bool loop)
         {
             if (clip == null) 
                 return null;
@@ -67,7 +64,7 @@ namespace Sound
             }
             return audioSource;
         }
-        private AudioSource PlayClipOnce(AudioClip clip, AudioMixerGroup output,bool persistent=false)
+    private AudioSource PlayClipOnce(AudioClip clip, AudioMixerGroup output,bool persistent=false)
         {
             AudioSource source = CreateAudioSource(clip, persistent);
 
@@ -79,8 +76,7 @@ namespace Sound
 
             source.Play();
 
-            return source;
+        return source;
         }
         #endregion
-    }
 }
