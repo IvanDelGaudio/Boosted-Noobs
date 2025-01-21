@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Timeline;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     #region Private variables
+    [Header("Enemy Velocity")]
+    [SerializeField] private float velocity;
+
     [Header("Nav Reference")]
     [SerializeField] private NavMeshAgent agent;
     
@@ -17,7 +21,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Layer")]
     [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
-  
+    
     [Header("Attack")]
     [SerializeField] private float timeBetweenAttacks;
 
@@ -45,7 +49,7 @@ public class EnemyAI : MonoBehaviour
     }
     void Start()
     {
-        
+        agent.speed = velocity;
 
     }
 
@@ -59,25 +63,38 @@ public class EnemyAI : MonoBehaviour
         if (playerInPovRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInPovRange) AttackPlayer();
     }
+    private void OnEnable()
+    {
+        Collectables.OnCollected += HandleCollectibleCollected;
+        Teleport.OnTeleport += HandleTeleport;
+    }
+
+
+    private void OnDisable()
+    {
+        Collectables.OnCollected -= HandleCollectibleCollected;
+        Teleport.OnTeleport -= HandleTeleport;
+
+    }
     #endregion
 
     #region Public methods
     #endregion
 
     #region Private methods
+    
     private void Patroling()
     {
         if (!isWalkPointSet) SearchWalkPoint();
 
         if (isWalkPointSet)
         {
-            //Debug.Log($"Setting agent destination to walkPoint: {walkPoint}");
             agent.SetDestination(walkPoint);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1.5f)
         {
             isWalkPointSet = false;
             Debug.Log("Reached walk point.");
@@ -86,33 +103,53 @@ public class EnemyAI : MonoBehaviour
 
     private void SearchWalkPoint()
     {
-        //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        Vector3 potentialPoint = new Vector3(randomX, transform.position.y, randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(potentialPoint, out hit, walkPointRange, NavMesh.AllAreas))
+        {
+            walkPoint = hit.position;
             isWalkPointSet = true;
+        }
+        else
+        {
+            isWalkPointSet = false; // Retry if no valid NavMesh point
+        }
     }
+
+
+    private float stuckTimer = 0f;
+    private const float maxStuckTime = 2f; // Time before handling stuck behavior
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
-    }
-    private void OnEnable()
-    {
-        Debug.Log("EnemyAI: Subscribed to Collectibles.OnCollected");
+        NavMeshPath path = new NavMeshPath();
 
-        Collectables.OnCollected += HandleCollectibleCollected;
+        if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
+        {
+            walkPoint = player.position;
+            isWalkPointSet = true;
+            agent.SetDestination(player.position);
+            stuckTimer = 0f; // Reset timer when chasing successfully
+        }
+        else
+        {
+            Debug.Log("Player is unreachable. Enemy will not continue chasing.");
+            stuckTimer += Time.deltaTime;
+
+            if (stuckTimer >= maxStuckTime)
+            {
+                Debug.Log("Enemy is stuck. Switching to patrol mode.");
+                Patroling();
+                stuckTimer = 0f;
+            }
+        }
     }
 
-    private void OnDisable()
-    {
-        Debug.Log("EnemyAI: Unsubscribed from Collectibles.OnCollected");
 
-        Collectables.OnCollected -= HandleCollectibleCollected;
-    }
 
     private void HandleCollectibleCollected(Transform collectible)
     {
@@ -122,7 +159,22 @@ public class EnemyAI : MonoBehaviour
 
         Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
     }
+    private void HandleTeleport(Transform location)
+    {
+        // Temporarily disable the NavMeshAgent
+        agent.enabled = false;
 
+        // Teleport to the target location
+        transform.position = location.position;
+
+        // Re-enable the NavMeshAgent
+        agent.enabled = true;
+
+        isWalkPointSet = false;
+
+        Debug.Log($"Enemy updated position to {location.position} after teleport invocation.");
+
+    }
     private void AttackPlayer()
     {
         //Make sure enemy doesn't move
