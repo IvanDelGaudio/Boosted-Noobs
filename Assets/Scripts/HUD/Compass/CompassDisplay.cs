@@ -41,6 +41,16 @@ public class CompassDisplay : MonoBehaviour
         compassElements.Add(compassElementInstance);
         compassElementInstance.SetSprite(elementData.elementSprite);
     }
+
+    public void AddNewMark(Transform obj, Sprite sprite)
+    {
+        RegisterCompassElement(new CompassElementData
+        {
+            targetTransform = obj,
+            elementSprite = sprite
+        });
+    }
+
     public void UnregisterTransform(Transform target)
     {
         CompassElement toRemove = compassElements.FirstOrDefault<CompassElement>(el => el.referencedTransform == target);

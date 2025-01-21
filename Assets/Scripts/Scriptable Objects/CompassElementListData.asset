@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2665ebe82206a147bcd3f3cc3ecbf89, type: 3}
   m_Name: CompassElementListData
   m_EditorClassIdentifier: 
-  elements: []
+  elementDataList:
+  - targetTransform: {fileID: 101284283218723420, guid: 0b379ab823252e34091971182a7beaaf, type: 3}
+    elementSprite: {fileID: 21300000, guid: 0c0059405444b7a47a3377a495f1680e, type: 3}
+  - targetTransform: {fileID: 2488736050135640000, guid: a08bee917684c3f4189ed5f6c5024271, type: 3}
+    elementSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
