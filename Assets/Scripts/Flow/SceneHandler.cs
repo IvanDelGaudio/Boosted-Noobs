@@ -14,7 +14,7 @@ public class SceneHandler : MonoBehaviour
     #region Public Methods
     public void LoadScene(string address)
     {
-        currentSceneLoad = SceneManager.LoadSceneAsync(address);
+        currentSceneLoad = SceneManager.LoadSceneAsync(address, loadMode);
     }
     #endregion
 
