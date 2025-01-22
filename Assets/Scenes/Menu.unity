@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33904cfc48ed6a5469de22efd8f6a8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneAddress: HUDTest
+  sceneAddress: Test Player
 --- !u!4 &526722891
 Transform:
   m_ObjectHideFlags: 0

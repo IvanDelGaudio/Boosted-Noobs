@@ -18,7 +18,7 @@ namespace PlayerControl
         Inventory.Item requiredItem;
         [SerializeField]
         GameObject CanvasOpenDoor;
-
+        private bool requiredKey;
         private void Start()
         {
             CanvasOpenDoor.SetActive(false);
@@ -26,14 +26,13 @@ namespace PlayerControl
 
         private void Update()
         {
-
             if (Input.GetKeyUp(KeyCode.E) && playerInRange)
             {
-                if (isdoorOpen == false)
+                requiredKey = RequiredItems(requiredItem);
+                if (isdoorOpen == false && requiredKey == true)
                 {
                     isdoorOpen = true;
                     Destroy(gameObject);
-                    RequiredItems(requiredItem);
                     Debug.Log("Door is open");
                 }
             }

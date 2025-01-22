@@ -26,6 +26,7 @@ public class AnimetionDoorUpDown : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             sfx_.PlaySFX();
+            Debug.Log("Sei uno stronzo");
             animator.SetBool(animatorOpenDoorName, true);
         }
         if (Input.GetKeyDown(KeyCode.B))
