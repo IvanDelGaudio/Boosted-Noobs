@@ -14,14 +14,14 @@ namespace PlayerControl
         bool playerInRange;
         [SerializeField]
         bool isdoorOpen;
-
         [SerializeField]
         Inventory.Item requiredItem;
-        private GameObject Wall;
+        [SerializeField]
+        GameObject CanvasOpenDoor;
 
         private void Start()
         {
-            Wall = GameObject.FindWithTag("Wall");
+            CanvasOpenDoor.SetActive(false);
         }
 
         private void Update()
@@ -32,7 +32,8 @@ namespace PlayerControl
                 if (isdoorOpen == false)
                 {
                     isdoorOpen = true;
-                    Destroy(Wall);
+                    Destroy(gameObject);
+                    RequiredItems(requiredItem);
                     Debug.Log("Door is open");
                 }
             }
@@ -43,7 +44,6 @@ namespace PlayerControl
         {
             if (Inventory.instance.items.Contains(itemRequired))
             {
-                Destroy(Wall);
                 Debug.Log("The Red Door is open");
                 return true;
             }
@@ -59,6 +59,7 @@ namespace PlayerControl
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                CanvasOpenDoor.SetActive(true);
                 RequiredItems(requiredItem);
                 Debug.Log("Player has enter");
                 playerInRange = true;
@@ -68,6 +69,7 @@ namespace PlayerControl
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                CanvasOpenDoor.SetActive(false);
                 Debug.Log("Player has exit");
                 playerInRange = false;
             }
