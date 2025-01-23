@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 124379793}
   - component: {fileID: 124379796}
   - component: {fileID: 124379795}
-  - component: {fileID: 124379794}
+  - component: {fileID: 124379797}
   m_Layer: 0
   m_Name: DoorModel
   m_TagString: Untagged
@@ -375,19 +375,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &124379794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124379785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a00ad171e4269074ab26ac046c498cfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animatorOpenDoorName: Open
 --- !u!95 &124379795
 Animator:
   serializedVersion: 5
@@ -423,8 +410,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: -7785527971405965403, guid: 6fad79122886640489f8d852d5fa485a, type: 2}
   clip: {fileID: 8300000, guid: d2ba5c39a6284b34db0f9bb483e61f16, type: 3}
-  positionObject: {x: 0, y: 0, z: 0}
+  positionObject: {fileID: 124379790}
   dimention: 2
+--- !u!114 &124379797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124379785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00ad171e4269074ab26ac046c498cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatorOpenDoorName: Open
 --- !u!1 &272496392
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -725,6 +726,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &963194229
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
 --- !u!1 &1062971822
 GameObject:
   m_ObjectHideFlags: 0

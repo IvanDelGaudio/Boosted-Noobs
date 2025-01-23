@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerControl
+[RequireComponent(typeof(AnimationDoorUpDown))]
+public class KeyCheck : MonoBehaviour
 {
-    //[RequireComponent(typeof(Animator))]
-    public class KeyCheck : MonoBehaviour
-    {
 
         [SerializeField]
         GameObject door;
@@ -19,25 +17,17 @@ namespace PlayerControl
         [SerializeField]
         GameObject CanvasOpenDoor;
         private bool requiredKey;
+    private AnimationDoorUpDown anim;
         private void Start()
         {
             CanvasOpenDoor.SetActive(false);
+        anim = GetComponent<AnimationDoorUpDown>();
         }
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.E) && playerInRange)
-            {
-                requiredKey = RequiredItems(requiredItem);
-                if (isdoorOpen == false && requiredKey == true)
-                {
-                    isdoorOpen = true;
-                    Destroy(gameObject);
-                    Debug.Log("Door is open");
-                }
-            }
+            CheckKey();
         }
-
 
         public bool RequiredItems(Inventory.Item itemRequired)
         {
@@ -74,6 +64,17 @@ namespace PlayerControl
             }
         }
 
-
+    private void CheckKey()
+    {
+        if (Input.GetKeyUp(KeyCode.E) && playerInRange)
+        {
+            requiredKey = RequiredItems(requiredItem);
+            if (isdoorOpen == false && requiredKey == true)
+            {
+                isdoorOpen = true;
+                Debug.Log("Door is open");
+            }
+        }
     }
 }
+

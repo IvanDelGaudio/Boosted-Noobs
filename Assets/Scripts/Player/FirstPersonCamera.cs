@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerControl
-{
     public class FirstPersonCamera : MonoBehaviour
     {
         [Header("Focus")]
@@ -78,4 +76,3 @@ namespace PlayerControl
                 currentVelocityAroundRight = Mathf.Sign(degreesPerSecond) * Mathf.Max(Mathf.Abs(currentVelocityAroundRight), Mathf.Abs(degreesPerSecond));
         }
     }
-}

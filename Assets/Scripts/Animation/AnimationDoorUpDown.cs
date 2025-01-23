@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(SFX))]
 [RequireComponent (typeof(Animator))]
-public class AnimetionDoorUpDown : MonoBehaviour
+public class AnimationDoorUpDown : MonoBehaviour
 {
     #region Public Variables
     [SerializeField]

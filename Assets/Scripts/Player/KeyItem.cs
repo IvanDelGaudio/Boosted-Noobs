@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerControl
-{
     public class KeyItem : MonoBehaviour
     {
         [SerializeField]
@@ -18,4 +16,4 @@ namespace PlayerControl
             }
         }
     }
-}
+

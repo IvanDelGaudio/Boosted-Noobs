@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PlayerControl
-{
     public class PlayerControllerMover : MonoBehaviour
     {
         public enum OrientMode : byte
@@ -141,4 +139,3 @@ namespace PlayerControl
             return Quaternion.Euler(smoothedAngle);
         }
     }
-}

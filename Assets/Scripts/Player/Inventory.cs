@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PlayerControl
-{
     public class Inventory : MonoBehaviour
     {
         public static Inventory instance;
@@ -46,5 +44,4 @@ namespace PlayerControl
 
     }
 
-}
 
