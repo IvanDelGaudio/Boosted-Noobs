@@ -113,6 +113,8 @@ public class EnemyAI : MonoBehaviour
         {
             walkPoint = hit.position;
             isWalkPointSet = true;
+            Debug.DrawLine(transform.position, walkPoint, Color.green);
+
         }
         else
         {
