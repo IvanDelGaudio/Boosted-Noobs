@@ -14,7 +14,7 @@ public class SFX : SoundControls
     #region Public Variables
     public AudioMixerGroup mixerGroup;
     public AudioClip clip;
-    public Vector3 positionObject;
+    public Transform positionObject;
     public dimentionSFX dimention = dimentionSFX.dimention2D;
     #endregion
     #region Private Variables
@@ -28,7 +28,7 @@ public class SFX : SoundControls
     switch (dimention)
                 {
     case dimentionSFX.dimention3D:
-    Play3DSound(clip, mixerGroup, positionObject,false);
+    Play3DSound(clip, mixerGroup, positionObject.position,false);
     break;
     case dimentionSFX.dimention2D:
     Play2DSound(clip, mixerGroup, false);

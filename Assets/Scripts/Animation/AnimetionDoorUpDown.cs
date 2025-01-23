@@ -8,7 +8,9 @@ public class AnimetionDoorUpDown : MonoBehaviour
     #region Public Variables
     [SerializeField]
     private string animatorOpenDoorName = "Open";
-    private int animetorOpenDoor = 0;
+    private int animatorOpenDoor = 0;
+    [Header ("Insert the initial state of the door")]
+    private bool animatorStart=false;
     #endregion
     #region Private Variables
     private SFX sfx_;
@@ -19,24 +21,20 @@ public class AnimetionDoorUpDown : MonoBehaviour
     {
         sfx_ = GetComponent<SFX>();
         animator = GetComponent<Animator>();
-        animetorOpenDoor = Animator.StringToHash(animatorOpenDoorName);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            sfx_.PlaySFX();
-            Debug.Log("Sei uno stronzo");
-            animator.SetBool(animatorOpenDoorName, true);
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            sfx_.PlaySFX();
-            animator.SetBool(animatorOpenDoorName, false);
-        }
+        animatorOpenDoor = Animator.StringToHash(animatorOpenDoorName);
     }
     #endregion
     #region Public Methods
+    public void SetTrueStateOfTheDoor()
+    { 
+        animator.SetBool(animatorOpenDoorName, true);
+        sfx_.PlaySFX();
+    }
+    public void SetFalseStateOfTheDoor()
+    { 
+        animator.SetBool(animatorOpenDoorName, false);
+        sfx_.PlaySFX();
+    }
     #endregion
     #region Private Methods
     #endregion
