@@ -7,49 +7,50 @@ using UnityEngine.ProBuilder.MeshOperations;
 public class KeyCheck : MonoBehaviour
 {
 
-        [SerializeField]
-        GameObject door;
-        [SerializeField]
-        bool playerInRange;
+    [SerializeField]
+    GameObject door;
+    [SerializeField]
+    bool playerInRange;
     [SerializeField]
     float timeForSetDoorClose = 2.0f;
     [SerializeField]
-        public bool isdoorOpen;
+    public bool isdoorOpen;
     [SerializeField]
     public bool doorOpenCheckKey=false;
     [SerializeField]
     bool isExit = false;
     [SerializeField]
-        Inventory.Item requiredItem;
-        [SerializeField]
-        GameObject CanvasOpenDoor;
-        private bool requiredKey;
+    Inventory.Item requiredItem;
+    [SerializeField]
+    public GameObject CanvasOpenDoor;
+    private bool requiredKey;
     private AnimationDoorUpDown anim;
     
-        private void Start()
-        {
-            CanvasOpenDoor.SetActive(false);
-        anim = GetComponent<AnimationDoorUpDown>();
-        }
+    private void Start()
+    {
+        CanvasOpenDoor.SetActive(false);
+    anim = GetComponent<AnimationDoorUpDown>();
+    }
 
-        private void Update()
-        {
-            CheckKey();
-        }
+    private void Update()
+    {
+        CheckKey();
+    }
 
-        public bool RequiredItems(Inventory.Item itemRequired)
+    public bool RequiredItems(Inventory.Item itemRequired)
+    {
+        if (Inventory.instance.items.Contains(itemRequired))
         {
-            if (Inventory.instance.items.Contains(itemRequired))
-            {
-                Debug.Log("The Red Door is open");
-                return true;
-            }
-            else
-            {
-                Debug.Log("The Red Door is not open");
-                return false;
-            }
+            Debug.Log("The Red Door is open");
+            doorOpenCheckKey = true;
+            return true;
         }
+        else
+        {
+            Debug.Log("The Red Door is not open");
+            return false;
+        }
+    }
 
     public void CloseTheDoor()
     {
@@ -57,19 +58,23 @@ public class KeyCheck : MonoBehaviour
         playerInRange = false;
         anim.SetFalseStateOfTheDoor();
     }
-        private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
+    {
+    if (doorOpenCheckKey == true)
+    {
+        CheckDoorKey();
+    }
+    else if (other.gameObject.CompareTag("Player"))
         {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                CanvasOpenDoor.SetActive(true);
-                RequiredItems(requiredItem);
-                Debug.Log("Player has enter");
-                playerInRange = true;
-            }
+            CanvasOpenDoor.SetActive(true);
+            RequiredItems(requiredItem);
+            Debug.Log("Player has enter");
+            playerInRange = true;
         }
+    }
       private void OnTriggerExit(Collider other)
       {
-          if (other.gameObject.CompareTag("Player") )
+        if (other.gameObject.CompareTag("Player") )
           {
               CanvasOpenDoor.SetActive(false);
               Debug.Log("Player has exit");
@@ -80,14 +85,10 @@ public class KeyCheck : MonoBehaviour
 
     private void CheckKey()
     {
-        if(doorOpenCheckKey == true)
+
+        if (Input.GetKeyUp(KeyCode.E) && playerInRange)
         {
             CheckDoorKey();
-        }
-        else if (Input.GetKeyUp(KeyCode.E) && playerInRange)
-        {
-            CheckDoorKey();
-            
         }
     }
     private void CheckDoorKey()
