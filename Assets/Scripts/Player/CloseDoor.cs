@@ -10,9 +10,6 @@ public class CloseDoor : MonoBehaviour
     #region Private Variables
     #endregion
     #region Lifecycle
-    private void Start()
-    {
-    }
     #endregion
     #region Public Methods
     #endregion
@@ -21,6 +18,7 @@ public class CloseDoor : MonoBehaviour
     {
         door.CloseTheDoor();
         door.isdoorOpen = false;
+        door.CanvasOpenDoor.SetActive(false);
     }
     #endregion
 }

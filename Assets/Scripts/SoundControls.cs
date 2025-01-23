@@ -49,7 +49,7 @@ private AudioSource soundtrackSource;
             return source;
         }
         #endregion
-        #region Private Methods
+#region Private Methods
     private AudioSource CreateAudioSource(AudioClip clip, bool loop)
         {
             if (clip == null) 
