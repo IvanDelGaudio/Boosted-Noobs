@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Palmmedia.ReportGenerator.Core;
 using UnityEngine;
 
-public class CheckGeneratorSave : Generator
+public class CheckGeneratorSave : MonoBehaviour
 {
     #region Public variables
     #endregion
 
     #region Private variables
     private Collider collider;
+    private bool generatorOpen;
+    [SerializeField] private Generator generator;
     #endregion
 
     #region Public properties
@@ -24,11 +27,11 @@ public class CheckGeneratorSave : Generator
     }
     void Start()
     {
-        
     }
 
     void Update()
     {
+        generatorOpen = generator.generatorOpen;
         CheckGeneratorCheckpoint();
     }
     #endregion

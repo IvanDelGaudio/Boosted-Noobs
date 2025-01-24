@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/New Folder/EnemyAI/Testing/MarcelloxHamza.unity
     guid: d363eba9624068849a886d4075b01f8f
+  - enabled: 1
+    path: Assets/MarcelloParte01 1.unity
+    guid: bdb596852cbbad54785514fe0dc79907
   m_configObjects: {}

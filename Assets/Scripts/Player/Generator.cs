@@ -6,7 +6,7 @@ public class Generator : MonoBehaviour
 {
     [SerializeField]
     bool playerInRange;
-    public bool generatorOpen { get; private set; }
+    public bool generatorOpen;
     [SerializeField]
     public bool FuseRed;
     [SerializeField]
