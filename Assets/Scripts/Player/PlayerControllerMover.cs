@@ -1,31 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.EventSystems;
-
+    [RequireComponent(typeof(SFX))]
     public class PlayerControllerMover : MonoBehaviour
     {
-        public enum OrientMode : byte
-        {
-            None, Movement, LookDirection
-        }
-        private CharacterController characterController = null;
+    public enum OrientMode : byte
+    {
+        None, Movement, LookDirection
+    }
+    private CharacterController characterController = null;
 
-        [Header("Anchors")]
-        [SerializeField]
-        private Transform renderRoot;
-        [Header("Move params")]
-        [SerializeField]
-        [Min(0.25f)]
-        private float speed = 5.0f;
-        [SerializeField]
-        private float Runspeed = 5.0f;
-        [SerializeField]
-        private OrientMode orientMode = OrientMode.Movement;
-        private float orientToReachTime = 0.5f;
-        private Vector3 orientToCurrentSpeed = Vector3.zero;
-        private float verticalSpeed = 0.0f;
-        private bool isGrounded
+    [Header("Anchors")]
+    [SerializeField]
+    private Transform renderRoot;
+    [Header("Move params")]
+    [SerializeField]
+    [Min(0.25f)]
+    private float speed = 5.0f;
+    [SerializeField]
+    private float Runspeed = 5.0f;
+    [SerializeField]
+    private OrientMode orientMode = OrientMode.Movement;
+    private float orientToReachTime = 0.5f;
+    private Vector3 orientToCurrentSpeed = Vector3.zero;
+    private float verticalSpeed = 0.0f;
+    private SFX sfx_;
+    private Vector3 initPositionPlayer;
+    private bool isGrounded
         {
             get
             {
@@ -35,7 +38,8 @@ using UnityEngine.EventSystems;
         }
         void Awake()
         {
-            characterController = GetComponent<CharacterController>();
+        sfx_ = GetComponent<SFX>();
+        characterController = GetComponent<CharacterController>();
         }
         void Start()
         {
@@ -50,7 +54,7 @@ using UnityEngine.EventSystems;
         }
         void Update()
         {
-
+            initPositionPlayer = transform.position;
             Vector3 moveDirection = Vector3.zero;
             Transform cam = Camera.main.transform;
             moveDirection += Input.GetAxis("Horizontal") * cam.right;
@@ -114,9 +118,10 @@ using UnityEngine.EventSystems;
 
         public void Move(Vector3 direction)
         {
-                direction += Vector3.up * verticalSpeed;
-                characterController.Move(direction * Time.deltaTime);
-            
+        direction += Vector3.up * verticalSpeed;
+        characterController.Move(direction * Time.deltaTime);
+        if(initPositionPlayer!=transform.position)
+        sfx_.PlaySFX();
         }
 
         public void Run()

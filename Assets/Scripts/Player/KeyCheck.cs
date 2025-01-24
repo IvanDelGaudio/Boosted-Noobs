@@ -6,9 +6,6 @@ using UnityEngine.ProBuilder.MeshOperations;
 [RequireComponent(typeof(AnimationDoorUpDown))]
 public class KeyCheck : MonoBehaviour
 {
-
-    [SerializeField]
-    GameObject door;
     [SerializeField]
     bool playerInRange;
     [SerializeField]
@@ -56,21 +53,27 @@ public class KeyCheck : MonoBehaviour
     {
         Debug.Log("Player has exit");
         playerInRange = false;
+        isdoorOpen = false;
         anim.SetFalseStateOfTheDoor();
     }
     private void OnTriggerEnter(Collider other)
     {
-    if (doorOpenCheckKey == true)
-    {
-        CheckDoorKey();
-    }
-    else if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             CanvasOpenDoor.SetActive(true);
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
             playerInRange = true;
         }
+        if (requiredKey == true && anim.controlOpenDoor == false && playerInRange)
+        {
+            anim.SetTrueStateOfTheDoor();
+        }
+        if (Input.GetKeyUp(KeyCode.E) && doorOpenCheckKey == true && anim.controlOpenDoor == false)
+        {
+                CheckDoorKey();
+        }
+        
     }
       private void OnTriggerExit(Collider other)
       {
@@ -94,7 +97,7 @@ public class KeyCheck : MonoBehaviour
     private void CheckDoorKey()
     {
         requiredKey = RequiredItems(requiredItem);
-        if (isdoorOpen == false && requiredKey == true)
+        if (isdoorOpen == false && requiredKey == true )
         {
             anim.SetTrueStateOfTheDoor();
             isdoorOpen = true;

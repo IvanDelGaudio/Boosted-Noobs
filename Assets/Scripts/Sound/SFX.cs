@@ -28,11 +28,17 @@ public class SFX : SoundControls
     switch (dimention)
                 {
     case dimentionSFX.dimention3D:
-    Play3DSound(clip, mixerGroup, positionObject.position,false);
+                if (audioSource == null)
+                {
+                    audioSource = Play3DSound(clip, mixerGroup, positionObject.position, false);
+                }
     break;
     case dimentionSFX.dimention2D:
-    Play2DSound(clip, mixerGroup, false);
-    break;
+                if (audioSource == null)
+                {
+                    audioSource = Play2DSound(clip, mixerGroup, false);
+                }
+                break;
                 }
     }
     #endregion

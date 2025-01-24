@@ -13,6 +13,7 @@ public class AnimationDoorUpDown : MonoBehaviour
     private int animatorStartDoor = 0;
     [Header ("Insert the initial state of the door")]
     private bool animatorStart=false;
+    public bool controlOpenDoor=false;
     #endregion
     #region Private Variables
     private SFX sfx_;
@@ -32,8 +33,9 @@ public class AnimationDoorUpDown : MonoBehaviour
     public void SetTrueStateOfTheDoor()
     {
         Debug.Log("sono entrato");
-        animator.SetBool(animatorOpenDoorName, true);
-        animator.SetBool(animatorStartDoorName, true);
+        controlOpenDoor = true;
+        animator.SetBool(animatorOpenDoorName, controlOpenDoor);
+        animator.SetBool(animatorStartDoorName, controlOpenDoor);
         if (soundTrig == true)
         {
             sfx_.PlaySFX();
@@ -41,9 +43,9 @@ public class AnimationDoorUpDown : MonoBehaviour
         }
     }
     public void SetFalseStateOfTheDoor()
-    { 
-
-        animator.SetBool(animatorOpenDoorName, false);
+    {
+        controlOpenDoor = false;
+        animator.SetBool(animatorOpenDoorName, controlOpenDoor);
         if (soundTrig == false)
         {
             sfx_.PlaySFX();

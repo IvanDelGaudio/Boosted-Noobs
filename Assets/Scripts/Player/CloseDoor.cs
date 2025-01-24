@@ -16,8 +16,9 @@ public class CloseDoor : MonoBehaviour
     #region Private Methods
     private void OnTriggerExit(Collider other)
     {
-        door.CloseTheDoor();
         door.isdoorOpen = false;
+        door.CloseTheDoor();
+        Debug.Log("sono entrato stronzo di merda");
         door.CanvasOpenDoor.SetActive(false);
     }
     #endregion
