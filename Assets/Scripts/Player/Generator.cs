@@ -7,68 +7,72 @@ public class Generator : MonoBehaviour
     [SerializeField]
     bool playerInRange;
     [SerializeField]
+    public bool FuseRed;
+    [SerializeField]
+    public bool FuseBlue;
+    [SerializeField]
+    public bool FuseGreen;
+    [SerializeField]
     Inventory.FuseItem requiredFuseRed;
     [SerializeField]
     Inventory.FuseItem requiredFuseBlue;
     [SerializeField]
     Inventory.FuseItem requiredFuseGreen;
     [SerializeField]
-    public GameObject CanvasOpenDoor;
-    public bool FuseRed;
-    public bool FuseBlue;
-    public bool FuseGreen;
+    public GameObject CanvasFuse;
+    [SerializeField]
+    public Renderer Warning;
+    private bool ChFuseRed;
+    private bool ChFuseBlue;
+    private bool ChFuseGreen;
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
-        CheckFuses();
+        CheckFuse();
+        CheckAll();
     }
 
-    public bool RequiredRedFuse(Inventory.FuseItem FuseRequired)
+    public bool RequiredRedFuse(Inventory.FuseItem itemRequired)
     {
-        if (Inventory.instance.fuse.Contains(FuseRequired))
+        if (Inventory.instance.fuse.Contains(itemRequired))
         {
-            FuseRed = true;
-            Debug.Log("Use Fuse Red");
+            Debug.Log("Red Fuse Yes");
             return true;
         }
         else
         {
-            Debug.Log("Fuse Red is don't the inventory");
+            Debug.Log("Nope");
             return false;
         }
     }
-    public bool RequiredBlueFuse(Inventory.FuseItem FuseRequired)
+    public bool RequiredBlueFuse(Inventory.FuseItem itemRequired)
     {
-        if (Inventory.instance.fuse.Contains(FuseRequired))
+        if (Inventory.instance.fuse.Contains(itemRequired))
         {
-           
-            Debug.Log("Use Fuse Blue");
+            Debug.Log("Blue Fuse Yes");
             return true;
         }
         else
         {
-            Debug.Log("Fuse Blue is don't the inventory");
+            Debug.Log("Nope");
             return false;
         }
     }
-
-
-    public bool RequiredGreenFuse(Inventory.FuseItem FuseRequired)
+    public bool RequiredGreenFuse(Inventory.FuseItem itemRequired)
     {
-        if (Inventory.instance.fuse.Contains(FuseRequired))
+        if (Inventory.instance.fuse.Contains(itemRequired))
         {
-            FuseGreen = true;
-            Debug.Log("Use Fuse Green");
+            Debug.Log("Green Fuse Yes");
             return true;
         }
         else
         {
-            Debug.Log("Fuse Green is don't the inventory");
+            Debug.Log("Nope");
             return false;
         }
     }
@@ -76,18 +80,20 @@ public class Generator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {   
-            CanvasOpenDoor.SetActive(true);
-            //FuseBlue = RequiredBlueFuse(requiredFuseBlue);
+        {
+            CanvasFuse.SetActive(true);
+            RequiredRedFuse(requiredFuseRed);
+            RequiredBlueFuse(requiredFuseBlue);
+            RequiredGreenFuse(requiredFuseGreen);
             Debug.Log("Player has enter");
             playerInRange = true;
-
         }
-        
+
         if (Input.GetKeyUp(KeyCode.E))
         {
-            FuseBlue = RequiredBlueFuse(requiredFuseBlue);
-            CheckFuses();
+            CheckFuseRed();
+            CheckFuseBlue();
+            CheckFuseGreen();
         }
 
     }
@@ -95,25 +101,55 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasOpenDoor.SetActive(false);
+            CanvasFuse.SetActive(false);
             Debug.Log("Player has exit");
             playerInRange = false;
         }
-
     }
-    private void CheckFuses()
+
+    private void CheckFuse()
     {
-        //Fuses = RequiredFuses(requiredFuse);
         if (Input.GetKeyUp(KeyCode.E) && playerInRange)
         {
-            RequiredRedFuse(requiredFuseRed);
-            RequiredBlueFuse(requiredFuseBlue);
-            RequiredGreenFuse(requiredFuseGreen);
+           CheckFuseRed();
+           CheckFuseBlue();
+           CheckFuseGreen();      
         }
-         
-        Debug.Log("Palle");
+    }
+    private void CheckFuseRed()
+    {
+        ChFuseRed = RequiredRedFuse(requiredFuseRed);
+        if (FuseRed == false && ChFuseRed == true)
+        {
+            FuseRed = true;
+            Debug.Log("Red is True");
+        }
+    }
+    private void CheckFuseBlue()
+    {
+        ChFuseBlue = RequiredBlueFuse(requiredFuseBlue);
+        if (FuseBlue == false && ChFuseBlue == true)
+        {
+            FuseBlue = true;
+            Debug.Log("blue is True");
+        }
+    }
+    private void CheckFuseGreen()
+    {
+        ChFuseGreen = RequiredGreenFuse(requiredFuseGreen);
+        if (FuseGreen == false && ChFuseGreen == true)
+        {
+            FuseGreen = true;
+            Debug.Log("green is True");
+        }
     }
 
-
-
+    private void CheckAll()
+    {
+        if (FuseRed == true && FuseBlue == true && FuseGreen == true)
+        {
+            Warning.material.color = Color.red;
+            Debug.Log("Luca ci uccide");
+        }
+    }
 }
