@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     #region Public Variables
     public void Resume()
     {
-        pausePanel.SetActive(false);
+        DeactivatePanel(pausePanel);
         Time.timeScale = 1f;
         isPaused = false;
     }
@@ -48,12 +48,22 @@ public class GameManager : MonoBehaviour
     {
         sceneHandler.LoadScene("Menu");
     }
+
+    public void ActivatePanel(GameObject panel)
+    {
+        panel.SetActive(true);
+    }
+
+    public void DeactivatePanel(GameObject panel)
+    {
+        panel.SetActive(false);
+    }
     #endregion
 
     #region Private Variables
     private void Pause()
     {
-        pausePanel.SetActive(true);
+        ActivatePanel(pausePanel);
         Time.timeScale = 0f;
         isPaused = true;
     }
