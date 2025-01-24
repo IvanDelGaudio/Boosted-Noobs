@@ -27876,6 +27876,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1016653407 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2715568074311574984, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+  m_PrefabInstance: {fileID: 1908929409}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1026692138
 Mesh:
   m_ObjectHideFlags: 0
@@ -48510,6 +48515,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7564737043674547839, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+      propertyPath: mixerGroup
+      value: 
+      objectReference: {fileID: -7785527971405965403, guid: 6fad79122886640489f8d852d5fa485a, type: 2}
+    - target: {fileID: 7564737043674547839, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+      propertyPath: positionObject
+      value: 
+      objectReference: {fileID: 1016653407}
+    - target: {fileID: 7564737043674547839, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+      propertyPath: clipList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564737043674547839, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+      propertyPath: audioClip.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564737043674547839, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
+      propertyPath: audioClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6529a49664a92724eb5796948ceb00d8, type: 3}
     - target: {fileID: 8105372575400261885, guid: e7c93db2582e50e47ab300a4fe954e5d, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -49694,6 +49719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatorOpenDoorName: Open
+  controlOpenDoor: 0
 --- !u!95 &1976093572
 Animator:
   serializedVersion: 5
@@ -49728,7 +49754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: -7785527971405965403, guid: 6fad79122886640489f8d852d5fa485a, type: 2}
-  clip: {fileID: 8300000, guid: d2ba5c39a6284b34db0f9bb483e61f16, type: 3}
+  audioClip: {fileID: 0}
   positionObject: {fileID: 1976093563}
   dimention: 1
 --- !u!65 &1976093574

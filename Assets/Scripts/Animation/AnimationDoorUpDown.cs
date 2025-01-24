@@ -38,7 +38,7 @@ public class AnimationDoorUpDown : MonoBehaviour
         animator.SetBool(animatorStartDoorName, controlOpenDoor);
         if (soundTrig == true)
         {
-            sfx_.PlaySFX();
+            sfx_.PlaySFX(0);
             soundTrig = false;
         }
     }
@@ -48,7 +48,7 @@ public class AnimationDoorUpDown : MonoBehaviour
         animator.SetBool(animatorOpenDoorName, controlOpenDoor);
         if (soundTrig == false)
         {
-            sfx_.PlaySFX();
+            sfx_.PlaySFX(0);
             soundTrig = true;
         }
     }

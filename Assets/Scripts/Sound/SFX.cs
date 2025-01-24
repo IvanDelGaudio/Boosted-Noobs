@@ -13,7 +13,7 @@ public class SFX : SoundControls
     }
     #region Public Variables
     public AudioMixerGroup mixerGroup;
-    public AudioClip clip;
+    public AudioClip[] audioClip;
     public Transform positionObject;
     public dimentionSFX dimention = dimentionSFX.dimention2D;
     #endregion
@@ -23,20 +23,20 @@ public class SFX : SoundControls
     #region Lifecycle
     #endregion
     #region Public Methods
-    public void PlaySFX()
+    public void PlaySFX(int i)
     { 
     switch (dimention)
                 {
     case dimentionSFX.dimention3D:
                 if (audioSource == null)
                 {
-                    audioSource = Play3DSound(clip, mixerGroup, positionObject.position, false);
+                    audioSource = Play3DSound(audioClip[i], mixerGroup, positionObject.position, false);
                 }
     break;
     case dimentionSFX.dimention2D:
                 if (audioSource == null)
                 {
-                    audioSource = Play2DSound(clip, mixerGroup, false);
+                    audioSource = Play2DSound(audioClip[i], mixerGroup, false);
                 }
                 break;
                 }

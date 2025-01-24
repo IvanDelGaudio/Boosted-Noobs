@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.EventSystems;
-    [RequireComponent(typeof(SFX))]
+
+[RequireComponent(typeof(SFX))]
     public class PlayerControllerMover : MonoBehaviour
     {
     public enum OrientMode : byte
@@ -121,7 +122,7 @@ using UnityEngine.EventSystems;
         direction += Vector3.up * verticalSpeed;
         characterController.Move(direction * Time.deltaTime);
         if(initPositionPlayer!=transform.position)
-        sfx_.PlaySFX();
+        sfx_.PlaySFX(0);
         }
 
         public void Run()
@@ -143,4 +144,5 @@ using UnityEngine.EventSystems;
 
             return Quaternion.Euler(smoothedAngle);
         }
-    }
+
+}

@@ -18,7 +18,7 @@ public class Test : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
-            sfx_.PlaySFX();
+            sfx_.PlaySFX(1);
     }
     #endregion
     #region Public Methods
