@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SFX))]
     public class PlayerControllerMover : MonoBehaviour
@@ -29,120 +30,150 @@ using UnityEngine.EventSystems;
     private float verticalSpeed = 0.0f;
     private SFX sfx_;
     private Vector3 initPositionPlayer;
+    private Vector3 spawnPosition; 
+
     private bool isGrounded
+    {
+        get
         {
-            get
-            {
-               return characterController.isGrounded;
-            }
-        
+            return characterController.isGrounded;
         }
-        void Awake()
-        {
+        
+    }
+    void Awake()
+    {
         sfx_ = GetComponent<SFX>();
         characterController = GetComponent<CharacterController>();
-        }
-        void Start()
+        spawnPosition = new Vector3(
+            PlayerPrefs.GetFloat("CheckpointPositionX"),
+            PlayerPrefs.GetFloat("CheckpointPositionY"),
+            PlayerPrefs.GetFloat("CheckpointPositionZ")
+
+        );
+
+        if (spawnPosition != initPositionPlayer)
         {
-            if (renderRoot != null)
-                renderRoot.position -= transform.up * characterController.skinWidth;
+            Debug.Log($"CheckpointPositionX, {PlayerPrefs.GetFloat("CheckpointPositionX")}");
+            Debug.Log($"CheckpointPositionY, {PlayerPrefs.GetFloat("CheckpointPositionZ")}");
+            Debug.Log($"CheckpointPositionZ, {PlayerPrefs.GetFloat("CheckpointPositionY")}");
+            transform.position = spawnPosition;
         }
-        void FixedUpdate()
-        {
-            if (isGrounded)
-                verticalSpeed = 0.0f;
-            verticalSpeed -= 9.81f * Time.deltaTime;
-        }
-        void Update()
+        else
         {
             initPositionPlayer = transform.position;
-            Vector3 moveDirection = Vector3.zero;
-            Transform cam = Camera.main.transform;
-            moveDirection += Input.GetAxis("Horizontal") * cam.right;
-            moveDirection += Input.GetAxis("Vertical") * cam.forward;
-            float moveMagnitude = moveDirection.magnitude;
-            moveDirection.y = 0.0f;
-            moveDirection.Normalize();
-            moveDirection *= moveMagnitude;
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+        }
+
+
+
+    }
+    private void OnEnable()
+    {
+        Save.OnSave += UpdateCheckpoint;
+
+    }
+    private void OnDestroy()
+    {
+        Save.OnSave -= UpdateCheckpoint;
+    }
+    void Start()
+    {
+        
+        if (renderRoot != null)
+            renderRoot.position -= transform.up * characterController.skinWidth;
+    }
+    void FixedUpdate()
+    {
+        if (isGrounded)
+            verticalSpeed = 0.0f;
+        verticalSpeed -= 9.81f * Time.deltaTime;
+    }
+    void Update()
+    {
+        Vector3 moveDirection = Vector3.zero;
+        Transform cam = Camera.main.transform;
+        moveDirection += Input.GetAxis("Horizontal") * cam.right;
+        moveDirection += Input.GetAxis("Vertical") * cam.forward;
+        float moveMagnitude = moveDirection.magnitude;
+        moveDirection.y = 0.0f;
+        moveDirection.Normalize();
+        moveDirection *= moveMagnitude;
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            speed= speed * Runspeed;
+            Debug.Log("Is run");
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            speed = speed / Runspeed;
+            Debug.Log("Is not run");
+        }
+
+        Move(moveDirection * speed);
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+
+
+
+        }
+        if (orientMode != OrientMode.None)
+        {
+            Quaternion targetRotation = transform.rotation;
+            switch (orientMode)
             {
-                speed= speed * Runspeed;
-                Debug.Log("Is run");
+                case OrientMode.Movement:
+                    if (moveDirection.sqrMagnitude > Mathf.Epsilon)
+                    {
+                        targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+                    }
+                    break;
+                case OrientMode.LookDirection:
+                    Vector3 cameraLookDirection = Camera.main.transform.forward;
+                    cameraLookDirection.y = 0.0f;
+
+                    if (cameraLookDirection.sqrMagnitude > Mathf.Epsilon)
+                        targetRotation = Quaternion.LookRotation(cameraLookDirection, Vector3.up);
+                    break;
+                default:
+                    break;
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                speed = speed / Runspeed;
-                Debug.Log("Is not run");
-            }
-
-            Move(moveDirection * speed);
-
-
-
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-
-
-
-            }
-
-
-
-
-
-
-                if (orientMode != OrientMode.None)
-            {
-                Quaternion targetRotation = transform.rotation;
-                switch (orientMode)
-                {
-                    case OrientMode.Movement:
-                        if (moveDirection.sqrMagnitude > Mathf.Epsilon)
-                        {
-                            targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-                        }
-                        break;
-                    case OrientMode.LookDirection:
-                        Vector3 cameraLookDirection = Camera.main.transform.forward;
-                        cameraLookDirection.y = 0.0f;
-
-                        if (cameraLookDirection.sqrMagnitude > Mathf.Epsilon)
-                            targetRotation = Quaternion.LookRotation(cameraLookDirection, Vector3.up);
-                        break;
-                    default:
-                        break;
-                }
                 transform.rotation = SmoothDampRotation(transform.rotation, targetRotation, ref orientToCurrentSpeed, orientToReachTime);
             }
 
-        }
+    }
+    private void UpdateCheckpoint(Vector3 newCheckpoint)
+    {
+        // Update the current spawn position
+        spawnPosition = newCheckpoint;
+        Debug.Log("Checkpoint updated to: " + spawnPosition);
+    }
 
-        public void Move(Vector3 direction)
-        {
+    public void Move(Vector3 direction)
+    {
         direction += Vector3.up * verticalSpeed;
         characterController.Move(direction * Time.deltaTime);
         if(initPositionPlayer!=transform.position)
-        sfx_.PlaySFX(0);
-        }
+            sfx_.PlaySFX(0);
+    }
 
-        public void Run()
-        {
+    public void Run()
+    {
 
-        }
+    }
 
 
-        private static Quaternion SmoothDampRotation(Quaternion from, Quaternion to, ref Vector3 currentVelocity, float smoothTime)
-        {
-            Vector3 fromEuler = from.eulerAngles;
-            Vector3 toEuler = to.eulerAngles;
+    private static Quaternion SmoothDampRotation(Quaternion from, Quaternion to, ref Vector3 currentVelocity, float smoothTime)
+    {
+        Vector3 fromEuler = from.eulerAngles;
+        Vector3 toEuler = to.eulerAngles;
 
-            Vector3 smoothedAngle = new Vector3(
-                Mathf.SmoothDampAngle(fromEuler.x, toEuler.x, ref currentVelocity.x, smoothTime),
-                Mathf.SmoothDampAngle(fromEuler.y, toEuler.y, ref currentVelocity.y, smoothTime),
-                Mathf.SmoothDampAngle(fromEuler.z, toEuler.z, ref currentVelocity.z, smoothTime)
-            );
+        Vector3 smoothedAngle = new Vector3(
+            Mathf.SmoothDampAngle(fromEuler.x, toEuler.x, ref currentVelocity.x, smoothTime),
+            Mathf.SmoothDampAngle(fromEuler.y, toEuler.y, ref currentVelocity.y, smoothTime),
+            Mathf.SmoothDampAngle(fromEuler.z, toEuler.z, ref currentVelocity.z, smoothTime)
+        );
 
-            return Quaternion.Euler(smoothedAngle);
-        }
+        return Quaternion.Euler(smoothedAngle);
+    }
 
 }
