@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,12 @@ public class SceneHandler : MonoBehaviour
     public void LoadScene(string address)
     {
         currentSceneLoad = SceneManager.LoadSceneAsync(address, loadMode);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Application quit");
     }
     #endregion
 
