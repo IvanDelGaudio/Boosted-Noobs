@@ -22687,6 +22687,32 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &836858929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 76208742469011052, guid: 3bea3c3663f871748a2d1ea8c7a5be36, type: 3}
+  m_PrefabInstance: {fileID: 1010011637289094519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &836858931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 836858929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73785a631b165bd4cb09656175bd0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+  FuseRed: 0
+  FuseBlue: 0
+  FuseGreen: 0
+  requiredFuseRed: 0
+  requiredFuseBlue: 0
+  requiredFuseGreen: 0
+  CanvasFuse: {fileID: 0}
+  Warning: {fileID: 0}
 --- !u!43 &848397891
 Mesh:
   m_ObjectHideFlags: 0
@@ -53374,7 +53400,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 76208742469011052, guid: 3bea3c3663f871748a2d1ea8c7a5be36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 836858931}
   m_SourcePrefab: {fileID: 100100000, guid: 3bea3c3663f871748a2d1ea8c7a5be36, type: 3}
 --- !u!1001 &2817934082330662404
 PrefabInstance:

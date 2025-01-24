@@ -6,6 +6,7 @@ public class Generator : MonoBehaviour
 {
     [SerializeField]
     bool playerInRange;
+    public bool generatorOpen { get; private set; }
     [SerializeField]
     public bool FuseRed;
     [SerializeField]
@@ -148,6 +149,7 @@ public class Generator : MonoBehaviour
     {
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
+            generatorOpen = true;
             Warning.material.color = Color.red;
             Debug.Log("Luca ci uccide");
         }
