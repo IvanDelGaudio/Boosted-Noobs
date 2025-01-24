@@ -40,6 +40,7 @@ public class MenuNavigation : MonoBehaviour
     private Color unselectedTextColor;
 
     private SceneHandler sceneHandler;
+    private SFX sfx;
     private bool isPlayPanelActive = false;
     #endregion
 
@@ -47,6 +48,7 @@ public class MenuNavigation : MonoBehaviour
     private void Start()
     {
         sceneHandler = GetComponent<SceneHandler>();
+        sfx = GetComponent<SFX>();
     }
 
     private void Update()
@@ -64,6 +66,16 @@ public class MenuNavigation : MonoBehaviour
     public void Quit()
     {
         sceneHandler.QuitGame();
+    }
+
+    public void PlayClickSound()
+    {
+        sfx.PlaySFX(0);
+    }
+
+    public void PlayHoverSound()
+    {
+        sfx.PlaySFX(0);
     }
     #endregion
 
