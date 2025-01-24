@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/New Folder/Menu.unity
     guid: daf6617e402e73a40911b6a7e8182d37
   - enabled: 1
-    path: Assets/Scenes/EnemyAI/Testing/MarcelloxHamza.unity
+    path: Assets/Scenes/New Folder/EnemyAI/Testing/MarcelloxHamza.unity
     guid: d363eba9624068849a886d4075b01f8f
   m_configObjects: {}
