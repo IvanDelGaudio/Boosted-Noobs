@@ -60,6 +60,11 @@ public class MenuNavigation : MonoBehaviour
     {
         sceneHandler.LoadScene(sceneAddress);
     }
+
+    public void Quit()
+    {
+        sceneHandler.QuitGame();
+    }
     #endregion
 
     #region Private Methods
