@@ -1,3 +1,4 @@
+using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,6 +98,7 @@ using UnityEngine.UIElements;
         moveDirection.y = 0.0f;
         moveDirection.Normalize();
         moveDirection *= moveMagnitude;
+        initPositionPlayer = transform.position;
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             speed= speed * Runspeed;
@@ -152,8 +154,11 @@ using UnityEngine.UIElements;
     {
         direction += Vector3.up * verticalSpeed;
         characterController.Move(direction * Time.deltaTime);
-        if(initPositionPlayer!=transform.position)
+        Vector3 vector3 = new Vector3 (1.0f,0.0f,1.0f);
+        if (transform.position!=initPositionPlayer)
+        {
             sfx_.PlaySFX(0);
+        }
     }
 
     public void Run()

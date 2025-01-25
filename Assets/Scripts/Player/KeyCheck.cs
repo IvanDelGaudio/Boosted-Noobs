@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AnimationDoorUpDown))]
 public class KeyCheck : MonoBehaviour
@@ -19,13 +20,13 @@ public class KeyCheck : MonoBehaviour
     [SerializeField]
     Inventory.Item requiredItem;
     [SerializeField]
-    public GameObject CanvasOpenDoor;
-    private bool requiredKey;
+    public Text text;
+    public bool requiredKey=false;
     private AnimationDoorUpDown anim;
     
     private void Start()
     {
-        CanvasOpenDoor.SetActive(false);
+    text.text="";
     anim = GetComponent<AnimationDoorUpDown>();
     }
 
@@ -60,7 +61,7 @@ public class KeyCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasOpenDoor.SetActive(true);
+            text.text="Press E";
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
             playerInRange = true;
@@ -79,7 +80,7 @@ public class KeyCheck : MonoBehaviour
       {
         if (other.gameObject.CompareTag("Player") )
           {
-              CanvasOpenDoor.SetActive(false);
+              text.text="";
               Debug.Log("Player has exit");
               playerInRange = false;
           }
