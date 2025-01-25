@@ -15,10 +15,7 @@ public class SaveManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            ClearPlayerRefs();
-        }
+
     }
     #endregion
 
@@ -32,11 +29,6 @@ public class SaveManager : MonoBehaviour
                 Destroy(checkpoint.gameObject);
             }
         }
-    }
-    private void ClearPlayerRefs()
-    {
-        if(Input.GetKeyUp(KeyCode.Escape))
-            PlayerPrefs.DeleteAll();
     }
     #endregion
 }

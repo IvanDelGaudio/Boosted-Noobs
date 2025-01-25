@@ -32,21 +32,15 @@ public class Teleport : MonoBehaviour
     {
         
     }
-    private void OnEnable()
-    {
-        BubbleTeleport.OnTeleport += Teleportation;
-    }
 
-    private void OnDisable()
-    {
-        BubbleTeleport.OnTeleport -= Teleportation;
-    }
     #endregion
 
     #region Public methods
     public void Teleportation(Transform teleportPosition)
     {
-        OnTeleportation?.Invoke(this.transform);
+        OnTeleportation?.Invoke(teleportPosition);
+        Debug.Log(this.transform.position);
+        Debug.Log($"Teleport gestito da {gameObject.name} con position {teleportPosition.position}");
         Destroy(this.gameObject);
     }
     #endregion

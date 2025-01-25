@@ -18,20 +18,28 @@ using UnityEngine.UIElements;
     [Header("Anchors")]
     [SerializeField]
     private Transform renderRoot;
+    
     [Header("Move params")]
+    
     [SerializeField]
     [Min(0.25f)]
     private float speed = 5.0f;
+    
     [SerializeField]
     private float Runspeed = 5.0f;
+    
     [SerializeField]
     private OrientMode orientMode = OrientMode.Movement;
+    
+    [SerializeField]
+    private Transform spawnPosition;
+    
     private float orientToReachTime = 0.5f;
     private Vector3 orientToCurrentSpeed = Vector3.zero;
     private float verticalSpeed = 0.0f;
     private SFX sfx_;
     private Vector3 initPositionPlayer;
-    private Vector3 spawnPosition; 
+    private Vector3 spawnPositionRefs; 
 
     private bool isGrounded
     {
@@ -45,23 +53,24 @@ using UnityEngine.UIElements;
     {
         sfx_ = GetComponent<SFX>();
         characterController = GetComponent<CharacterController>();
-        spawnPosition = new Vector3(
+        spawnPositionRefs = new Vector3(
             PlayerPrefs.GetFloat("CheckpointPositionX"),
             PlayerPrefs.GetFloat("CheckpointPositionY"),
             PlayerPrefs.GetFloat("CheckpointPositionZ")
 
         );
+        
 
-        if (spawnPosition != initPositionPlayer)
+        if (spawnPositionRefs != initPositionPlayer)
         {
             Debug.Log($"CheckpointPositionX, {PlayerPrefs.GetFloat("CheckpointPositionX")}");
             Debug.Log($"CheckpointPositionY, {PlayerPrefs.GetFloat("CheckpointPositionZ")}");
             Debug.Log($"CheckpointPositionZ, {PlayerPrefs.GetFloat("CheckpointPositionY")}");
-            transform.position = spawnPosition;
+            transform.position = spawnPositionRefs;
         }
-        else
+        else if(spawnPositionRefs == Vector3.zero)
         {
-            initPositionPlayer = transform.position;
+            transform.position = spawnPosition.position;
         }
 
 
@@ -146,7 +155,7 @@ using UnityEngine.UIElements;
     private void UpdateCheckpoint(Vector3 newCheckpoint)
     {
         // Update the current spawn position
-        spawnPosition = newCheckpoint;
+        spawnPositionRefs = newCheckpoint;
         Debug.Log("Checkpoint updated to: " + spawnPosition);
     }
 

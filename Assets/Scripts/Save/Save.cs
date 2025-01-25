@@ -7,7 +7,8 @@ public class Save : MonoBehaviour
     #region Public variables
     public delegate void CheckpointActivated(Vector3 checkpointPosition);
     public static event CheckpointActivated OnSave;
-
+    public GameManager gameManager;
+    public GameObject checkpoint;
     public string checkpointID; 
     #endregion
 
@@ -34,8 +35,10 @@ public class Save : MonoBehaviour
             OnSave?.Invoke(transform.position);
             Debug.Log("Checkpoint saved at: " + transform.position);
             Destroy(this.gameObject);
+            gameManager.ActivatePanelForSeconds(checkpoint,5);
         }
     }
+
     #endregion
 
     #region Public methods

@@ -5,8 +5,8 @@ using UnityEngine;
 public class BubbleTeleport : MonoBehaviour
 {
     #region Public variables
-    public delegate void BubbleTeleportationTriggered(Transform location);
-    public static event BubbleTeleportationTriggered OnTeleport;
+    public Teleport associatedTeleport;
+
     #endregion
 
     #region Private variables
@@ -44,12 +44,11 @@ public class BubbleTeleport : MonoBehaviour
     {
         if (Vector3.Distance(player.position, transform.position) < 1.5)
         {
-            OnTeleport?.Invoke(transform);
+            associatedTeleport?.Teleportation(associatedTeleport.transform);
             Destroy(gameObject); // Remove the collectible
             return true;
         }
-        return false;
-
+        return false;   
     }
     #endregion
 
