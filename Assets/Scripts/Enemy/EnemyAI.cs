@@ -85,6 +85,11 @@ public class EnemyAI : MonoBehaviour
     
     private void Patroling()
     {
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
+            return;
+        }
         if (!isWalkPointSet) SearchWalkPoint();
 
         if (isWalkPointSet)
@@ -106,19 +111,25 @@ public class EnemyAI : MonoBehaviour
         float randomX = Random.Range(-walkPointRange, walkPointRange);
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
 
-        Vector3 potentialPoint = new Vector3(randomX, transform.position.y, randomZ);
+        Vector3 potentialPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        Debug.DrawRay(potentialPoint, Vector3.up * 10, Color.blue, 5f);
+        NavMeshHit hit = new NavMeshHit();
+        Debug.DrawRay(hit.position, Vector3.up * 10, Color.blue, 5f);
+        Debug.Log($"Trying point: {potentialPoint}");
 
-        NavMeshHit hit;
         if (NavMesh.SamplePosition(potentialPoint, out hit, walkPointRange, NavMesh.AllAreas))
         {
             walkPoint = hit.position;
             isWalkPointSet = true;
-            Debug.DrawLine(transform.position, walkPoint, Color.green);
+            Debug.DrawLine(transform.position, walkPoint, Color.green, 2f);
 
         }
         else
         {
+            Debug.Log("No valid walk point found. Retrying...");
             isWalkPointSet = false; // Retry if no valid NavMesh point
+            Debug.DrawLine(potentialPoint, potentialPoint + Vector3.up * 5, Color.red, 2f);
+
         }
     }
 
@@ -128,9 +139,17 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
+        // Verifica che l'agente sia abilitato e posizionato su un NavMesh
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
+            return;
+        }
+
         NavMeshPath path = new NavMeshPath();
 
-        if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
+        // Calcola il percorso solo se l'agente è abilitato e correttamente configurato
+        if (agent.enabled && agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
         {
             walkPoint = player.position;
             isWalkPointSet = true;
@@ -139,17 +158,18 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player is unreachable. Enemy will not continue chasing.");
+            Debug.Log("Player irraggiungibile. L'Enemy smetterà di inseguire.");
             stuckTimer += Time.deltaTime;
 
             if (stuckTimer >= maxStuckTime)
             {
-                Debug.Log("Enemy is stuck. Switching to patrol mode.");
+                Debug.Log("Enemy è bloccato. Passa alla modalità di pattugliamento.");
                 Patroling();
                 stuckTimer = 0f;
             }
         }
     }
+
 
 
 
@@ -208,6 +228,7 @@ public class EnemyAI : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(walkPoint, 0.5f);
         }
+
     }
     #endregion
 
