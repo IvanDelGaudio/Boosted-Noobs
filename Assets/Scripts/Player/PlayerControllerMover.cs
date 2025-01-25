@@ -172,9 +172,18 @@ public class PlayerControllerMover : MonoBehaviour
         }
     }
 
-    public void Run()
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            Die();
+        } 
+    }
+
+    private void Die()
     {
 
+        Destroy(gameObject);
     }
 
 
