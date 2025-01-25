@@ -7,7 +7,7 @@ public class ButtonCheck : MonoBehaviour
 {
     #region Public Variables
     public Text text;
-    public AnimationDoorUpDown anim;
+    public AnimationDoorController anim;
     public Material material;
     public AnimationButton animButton;
 
