@@ -1,24 +1,25 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
-public class SetURPForThisScene : MonoBehaviour
+public class RenderPipelineManager : MonoBehaviour
 {
-    [SerializeField]
-    public UniversalRenderPipelineAsset urpAsset;
+    public RenderPipelineAsset newRenderPipelineAsset;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        if (urpAsset != null)
-        {
-            GraphicsSettings.renderPipelineAsset = urpAsset;
-            QualitySettings.renderPipeline = urpAsset;
-        }
+        SceneManager.activeSceneChanged += OnSceneChanged;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        GraphicsSettings.renderPipelineAsset = null;
-        QualitySettings.renderPipeline = null;
+        SceneManager.activeSceneChanged -= OnSceneChanged;
+        GraphicsSettings.renderPipelineAsset = null;  // Set to None when disabled
+    }
+
+    private void OnSceneChanged(Scene current, Scene next)
+    {
+        GraphicsSettings.renderPipelineAsset = newRenderPipelineAsset;  // Set to new render pipeline asset
     }
 }
+
