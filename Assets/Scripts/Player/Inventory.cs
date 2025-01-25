@@ -15,14 +15,13 @@ public class Inventory : MonoBehaviour
         else
             instance = this;
     }
+    
 
     public void AddItem(Item itemToAdd)
     {
         //if (items.Contains(itemToAdd))
 
         items.Add(itemToAdd);
-
-
 
         Debug.Log(itemToAdd + " added to inventory.");
     }
