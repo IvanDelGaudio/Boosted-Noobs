@@ -16,9 +16,10 @@ public class SFX : SoundControls
     public AudioClip[] audioClip;
     public Transform positionObject;
     public dimentionSFX dimention = dimentionSFX.dimention2D;
+    [NonSerialized]
+    public AudioSource audioSource;
     #endregion
     #region Private Variables
-    private AudioSource audioSource;
     #endregion
     #region Lifecycle
     #endregion
@@ -27,19 +28,19 @@ public class SFX : SoundControls
     { 
     switch (dimention)
                 {
-    case dimentionSFX.dimention3D:
-                if (audioSource == null)
-                {
-                    audioSource = Play3DSound(audioClip[i], mixerGroup, positionObject.position, false);
-                }
-    break;
-    case dimentionSFX.dimention2D:
-                if (audioSource == null)
-                {
-                    audioSource = Play2DSound(audioClip[i], mixerGroup, false);
-                }
-                break;
-                }
+        case dimentionSFX.dimention3D:
+        if (audioSource == null)
+        {
+            audioSource = Play3DSound(audioClip[i], mixerGroup, positionObject.position, false);
+        }
+        break;
+        case dimentionSFX.dimention2D:
+        if (audioSource == null)
+        {
+            audioSource = Play2DSound(audioClip[i], mixerGroup, false);
+        }
+        break;
+        }
     }
     #endregion
 }

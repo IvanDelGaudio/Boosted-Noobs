@@ -18,8 +18,6 @@ public class CloseDoor : MonoBehaviour
     {
         door.isdoorOpen = false;
         door.CloseTheDoor();
-        Debug.Log("sono entrato stronzo di merda");
-        door.CanvasOpenDoor.SetActive(false);
     }
     #endregion
 }
