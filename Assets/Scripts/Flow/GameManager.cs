@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,6 +48,18 @@ public class GameManager : MonoBehaviour
     public void GoToMenu()
     {
         sceneHandler.LoadScene("Menu");
+    }
+
+    public void ActivatePanelForSeconds(GameObject panel, float duration)
+    {
+        StartCoroutine(ActivateThenDeactivate(panel, duration));
+    }
+
+    private IEnumerator ActivateThenDeactivate(GameObject panel, float duration)
+    {
+        ActivatePanel(panel);
+        yield return new WaitForSeconds(duration);
+        DeactivatePanel(panel);
     }
 
     public void ActivatePanel(GameObject panel)
