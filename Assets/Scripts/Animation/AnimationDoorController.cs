@@ -37,11 +37,11 @@ public class AnimationDoorController : MonoBehaviour
     private void Update()
     {
         AnimateYPosition();
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SetFalseDoor();
         }
-        if (Input.GetKeyUp(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             SetTrueStateOfTheDoor();
         }
