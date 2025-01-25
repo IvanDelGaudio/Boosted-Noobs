@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(SFX))]
 public class EnemyAI : MonoBehaviour
 {
     #region Private variables
@@ -23,6 +24,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float povRange;
     [SerializeField] private float attackRange;
 
+    [Header("SFX")]
+    [SerializeField] private SFX sfx;
+
     private bool isWalkPointSet;
     private Vector3 walkPoint;
 
@@ -36,6 +40,10 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     #region Lifecycle
+    private void Awake()
+    {
+        sfx = GetComponent<SFX>();
+    }
     void Start()
     {
         agent.speed = velocity;
@@ -44,6 +52,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if(transform.position != Vector3.zero)
+        {
+            sfx.PlaySFX(0);
+            sfx.PlaySFX(1);
+        }
         // Controlla lo stato del giocatore
         bool playerInPovRange = Physics.CheckSphere(transform.position, povRange, whatIsPlayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -86,13 +99,13 @@ public class EnemyAI : MonoBehaviour
     private void OnEnable()
     {
         Collectables.OnCollected += HandleCollectibleCollected;
-        Teleport.OnTeleport += HandleTeleport;
+        Teleport.OnTeleportation += HandleTeleport;
     }
 
     private void OnDisable()
     {
         Collectables.OnCollected -= HandleCollectibleCollected;
-        Teleport.OnTeleport -= HandleTeleport;
+        Teleport.OnTeleportation -= HandleTeleport;
     }
     #endregion
 

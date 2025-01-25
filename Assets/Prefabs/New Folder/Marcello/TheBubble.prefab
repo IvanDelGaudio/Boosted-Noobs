@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5887859003230643060}
   - component: {fileID: 7356876302181944701}
   - component: {fileID: 5063316488830776954}
-  - component: {fileID: 4547278254487760705}
+  - component: {fileID: 8132248156368557414}
   m_Layer: 0
   m_Name: TheBubble
   m_TagString: Untagged
@@ -34074,8 +34074,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643793566482428366}
   m_Mesh: {fileID: 0}
---- !u!64 &4547278254487760705
-MeshCollider:
+--- !u!135 &8132248156368557414
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -34092,10 +34092,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 3
+  m_Radius: 1.25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &992950943718620083
 GameObject:
   m_ObjectHideFlags: 0
@@ -34225,7 +34224,6 @@ GameObject:
   - component: {fileID: 3997114273591676451}
   - component: {fileID: 4874537115663532777}
   - component: {fileID: 6074299029798256692}
-  - component: {fileID: 3982790019248584736}
   m_Layer: 0
   m_Name: TheBubbleCore
   m_TagString: Untagged
@@ -68285,26 +68283,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4585517490124859252}
-  m_Mesh: {fileID: 0}
---- !u!64 &3982790019248584736
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4585517490124859252}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
   m_Mesh: {fileID: 0}

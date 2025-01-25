@@ -6,7 +6,7 @@ public class Teleport : MonoBehaviour
 {
     #region Public variables
     public delegate void TeleportationTriggered(Transform location);
-    public static event TeleportationTriggered OnTeleport;
+    public static event TeleportationTriggered OnTeleportation;
     #endregion
 
     #region Private variables
@@ -32,13 +32,22 @@ public class Teleport : MonoBehaviour
     {
         
     }
+    private void OnEnable()
+    {
+        BubbleTeleport.OnTeleport += Teleportation;
+    }
+
+    private void OnDisable()
+    {
+        BubbleTeleport.OnTeleport -= Teleportation;
+    }
     #endregion
 
     #region Public methods
-    public void OnEnable()
+    public void Teleportation(Transform teleportPosition)
     {
-        OnTeleport?.Invoke(this.transform);
-        //Destroy(this.gameObject); // Remove the collectible
+        OnTeleportation?.Invoke(this.transform);
+        Destroy(this.gameObject);
     }
     #endregion
 
