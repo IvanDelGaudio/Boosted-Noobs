@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(SFX))]
-[DisallowMultipleComponent]
+[RequireComponent(typeof(Animator))]
 public class AnimationDoorController : MonoBehaviour
 {
     #region Private Variables
@@ -31,15 +31,21 @@ public class AnimationDoorController : MonoBehaviour
         animatorStartDoor = Animator.StringToHash(animatorStartDoorName);
         originalPosition = transform.position;
 
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         AnimateYPosition();
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            SetFalseDoor();
+        }
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            SetTrueStateOfTheDoor();
+        }
+
     }
     #endregion
 
@@ -62,9 +68,11 @@ public class AnimationDoorController : MonoBehaviour
             soundTrig = false;
         }
     }
-    public void SetFalseStateOfTheDoor()
+    public void SetFalseDoor()
     {
         controlOpenDoor = false;
+        Debug.Log("sono uscito");
+        Debug.Log(animatorOpenDoorName);
         animator.SetBool(animatorOpenDoorName, controlOpenDoor);
         if (soundTrig == false)
         {
