@@ -22,14 +22,17 @@ public class Generator : MonoBehaviour
     [SerializeField]
     public GameObject CanvasFuse;
     [SerializeField]
+    public GameObject LightActive;
+    [SerializeField]
     public Renderer Warning;
     private bool ChFuseRed;
     private bool ChFuseBlue;
     private bool ChFuseGreen;
+    
 
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -150,6 +153,7 @@ public class Generator : MonoBehaviour
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
             generatorOpen = true;
+            LightActive.SetActive(true);
             Warning.material.color = Color.red;
             Debug.Log("Luca ci uccide");
         }
