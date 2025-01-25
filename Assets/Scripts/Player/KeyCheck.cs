@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(AnimationDoorUpDown))]
+[RequireComponent(typeof(AnimationDoorController))]
 public class KeyCheck : MonoBehaviour
 {
     [SerializeField]
@@ -22,12 +22,12 @@ public class KeyCheck : MonoBehaviour
     [SerializeField]
     public Text text;
     public bool requiredKey=false;
-    private AnimationDoorUpDown anim;
+    private AnimationDoorController anim;
     
     private void Start()
     {
     text.text="";
-    anim = GetComponent<AnimationDoorUpDown>();
+    anim = GetComponent<AnimationDoorController>();
     }
 
     private void Update()
@@ -55,13 +55,16 @@ public class KeyCheck : MonoBehaviour
         Debug.Log("Player has exit");
         playerInRange = false;
         isdoorOpen = false;
-        anim.SetFalseStateOfTheDoor();
+        anim.SetFalseDoor();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text="Press E";
+            if (!requiredKey)
+            {
+                text.text = "Press E";
+            }
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
             playerInRange = true;

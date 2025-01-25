@@ -7,7 +7,7 @@ public class ButtonCheck : MonoBehaviour
 {
     #region Public Variables
     public Text text;
-    public AnimationDoorUpDown anim;
+    public KeyCheck key;
     public Material material;
     public AnimationButton animButton;
 
@@ -15,7 +15,7 @@ public class ButtonCheck : MonoBehaviour
     #region Private Variables
     [SerializeField]
     private bool playerInRange;
-    private bool finischedSound;
+    private bool finishedSound;
     private SFX sfx_;
     [SerializeField]
     private Light light;
@@ -46,9 +46,9 @@ public class ButtonCheck : MonoBehaviour
             Debug.Log("Player has enter");
             playerInRange = true;
         }
-    }   
+    }
 
-        private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -59,23 +59,23 @@ public class ButtonCheck : MonoBehaviour
     }
     private void activeSound()
     {
-        if (playerInRange && Input.GetKeyUp(KeyCode.E) && finischedSound==false)
+        if (playerInRange && Input.GetKeyDown(KeyCode.E) && finishedSound == false)
         {
-            animButton.SetTrueAnimationbutton();
             sfx_.PlaySFX(0);
-            finischedSound = true;
+            finishedSound = true;
         }
 
     }
 
     private void checkEndTheSong()
     {
-        if (sfx_.audioSource==null && finischedSound == true)
+        if (sfx_.audioSource == null && finishedSound == true)
         {
             Debug.Log("sei un coglione");
-            anim.SetTrueStateOfTheDoor();
             light.color = Color.green;
             button.material = material;
+            finishedSound = false;
+            key.requiredKey = true; 
         }
     }
     #endregion
