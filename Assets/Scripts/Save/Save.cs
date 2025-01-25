@@ -9,7 +9,7 @@ public class Save : MonoBehaviour
     public static event CheckpointActivated OnSave;
     public GameManager gameManager;
     public GameObject checkpoint;
-    public string checkpointID; 
+    public string checkpointID;
     #endregion
 
     #region Private variables
@@ -17,12 +17,15 @@ public class Save : MonoBehaviour
     #endregion
 
     #region Lifecycle
+    private void Awake()
+    {
+    }
     private void Start()
     {
-        
+
         if (IsCheckpointActivated(checkpointID))
         {
-            Destroy(this.gameObject); 
+            Destroy(this.gameObject);
         }
     }
 
@@ -35,7 +38,7 @@ public class Save : MonoBehaviour
             OnSave?.Invoke(transform.position);
             Debug.Log("Checkpoint saved at: " + transform.position);
             Destroy(this.gameObject);
-            gameManager.ActivatePanelForSeconds(checkpoint,5);
+            gameManager.ActivatePanelForSeconds(checkpoint, 5);
         }
     }
 

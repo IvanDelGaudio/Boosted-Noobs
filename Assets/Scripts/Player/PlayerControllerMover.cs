@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SFX))]
-    public class PlayerControllerMover : MonoBehaviour
-    {
+public class PlayerControllerMover : MonoBehaviour
+{
     public enum OrientMode : byte
     {
         None, Movement, LookDirection
@@ -18,28 +18,28 @@ using UnityEngine.UIElements;
     [Header("Anchors")]
     [SerializeField]
     private Transform renderRoot;
-    
+
     [Header("Move params")]
-    
+
     [SerializeField]
     [Min(0.25f)]
     private float speed = 5.0f;
-    
+
     [SerializeField]
     private float Runspeed = 5.0f;
-    
+
     [SerializeField]
     private OrientMode orientMode = OrientMode.Movement;
-    
+
     [SerializeField]
     private Transform spawnPosition;
-    
+
     private float orientToReachTime = 0.5f;
     private Vector3 orientToCurrentSpeed = Vector3.zero;
     private float verticalSpeed = 0.0f;
     private SFX sfx_;
     private Vector3 initPositionPlayer;
-    private Vector3 spawnPositionRefs; 
+    private Vector3 spawnPositionRefs;
 
     private bool isGrounded
     {
@@ -47,35 +47,37 @@ using UnityEngine.UIElements;
         {
             return characterController.isGrounded;
         }
-        
+
     }
     void Awake()
     {
         sfx_ = GetComponent<SFX>();
         characterController = GetComponent<CharacterController>();
+
+        // Ottieni i valori salvati nei PlayerPrefs
         spawnPositionRefs = new Vector3(
-            PlayerPrefs.GetFloat("CheckpointPositionX"),
-            PlayerPrefs.GetFloat("CheckpointPositionY"),
-            PlayerPrefs.GetFloat("CheckpointPositionZ")
-
+            PlayerPrefs.GetFloat("CheckpointPositionX", 0.0f), // Default a 0.0f se il valore non esiste
+            PlayerPrefs.GetFloat("CheckpointPositionY", 0.0f),
+            PlayerPrefs.GetFloat("CheckpointPositionZ", 0.0f)
         );
-        
 
-        if (spawnPositionRefs != initPositionPlayer)
-        {
-            Debug.Log($"CheckpointPositionX, {PlayerPrefs.GetFloat("CheckpointPositionX")}");
-            Debug.Log($"CheckpointPositionY, {PlayerPrefs.GetFloat("CheckpointPositionZ")}");
-            Debug.Log($"CheckpointPositionZ, {PlayerPrefs.GetFloat("CheckpointPositionY")}");
-            transform.position = spawnPositionRefs;
-        }
-        else if(spawnPositionRefs == Vector3.zero)
+        // Controlla se i PlayerPrefs sono validi
+        if (spawnPositionRefs == Vector3.zero) // Nessun checkpoint salvato
         {
             transform.position = spawnPosition.position;
+
+            // Salva la posizione iniziale come checkpoint
+            PlayerPrefs.SetFloat("CheckpointPositionX", spawnPosition.position.x);
+            PlayerPrefs.SetFloat("CheckpointPositionY", spawnPosition.position.y);
+            PlayerPrefs.SetFloat("CheckpointPositionZ", spawnPosition.position.z);
+            PlayerPrefs.Save();
         }
-
-
-
+        else // Posiziona il giocatore all'ultimo checkpoint salvato
+        {
+            transform.position = spawnPositionRefs;
+        }
     }
+
     private void OnEnable()
     {
         Save.OnSave += UpdateCheckpoint;
@@ -87,7 +89,7 @@ using UnityEngine.UIElements;
     }
     void Start()
     {
-        
+
         if (renderRoot != null)
             renderRoot.position -= transform.up * characterController.skinWidth;
     }
@@ -110,7 +112,7 @@ using UnityEngine.UIElements;
         initPositionPlayer = transform.position;
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            speed= speed * Runspeed;
+            speed = speed * Runspeed;
             Debug.Log("Is run");
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -148,8 +150,8 @@ using UnityEngine.UIElements;
                 default:
                     break;
             }
-                transform.rotation = SmoothDampRotation(transform.rotation, targetRotation, ref orientToCurrentSpeed, orientToReachTime);
-            }
+            transform.rotation = SmoothDampRotation(transform.rotation, targetRotation, ref orientToCurrentSpeed, orientToReachTime);
+        }
 
     }
     private void UpdateCheckpoint(Vector3 newCheckpoint)
@@ -163,8 +165,8 @@ using UnityEngine.UIElements;
     {
         direction += Vector3.up * verticalSpeed;
         characterController.Move(direction * Time.deltaTime);
-        Vector3 vector3 = new Vector3 (1.0f,0.0f,1.0f);
-        if (transform.position!=initPositionPlayer)
+        Vector3 vector3 = new Vector3(1.0f, 0.0f, 1.0f);
+        if (transform.position != initPositionPlayer)
         {
             sfx_.PlaySFX(0);
         }

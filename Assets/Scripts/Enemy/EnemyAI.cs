@@ -114,7 +114,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!agent.isOnNavMesh)
         {
-            Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
+            //Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
             return;
         }
 
@@ -130,7 +130,7 @@ public class EnemyAI : MonoBehaviour
         if (distanceToWalkPoint.magnitude < 1.5f)
         {
             isWalkPointSet = false;
-            Debug.Log("Punto di pattugliamento raggiunto.");
+            //Debug.Log("Punto di pattugliamento raggiunto.");
         }
     }
 
@@ -139,7 +139,7 @@ public class EnemyAI : MonoBehaviour
         // Esegui la ricerca del walk point solo se non si è in attacco
         if (currentState == EnemyState.Attacking || isAttacking)
         {
-            Debug.Log("Skip ricerca walk point durante l'attacco.");
+            //Debug.Log("Skip ricerca walk point durante l'attacco.");
             return;
         }
 
@@ -156,19 +156,19 @@ public class EnemyAI : MonoBehaviour
             {
                 walkPoint = hit.position;
                 isWalkPointSet = true;
-                Debug.Log($"Walk point trovato: {walkPoint}");
+                //Debug.Log($"Walk point trovato: {walkPoint}");
                 return;
             }
         }
 
-        Debug.LogWarning("Nessun punto valido trovato per il pattugliamento.");
+        //Debug.LogWarning("Nessun punto valido trovato per il pattugliamento.");
     }
 
     private void ChasePlayer()
     {
         if (!agent.isOnNavMesh)
         {
-            Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
+            //Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
             return;
         }
 
@@ -178,7 +178,7 @@ public class EnemyAI : MonoBehaviour
         if (agent.enabled && agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
         {
             agent.SetDestination(player.position);
-            Debug.Log("Inseguendo il giocatore.");
+            //Debug.Log("Inseguendo il giocatore.");
             stuckTimer = 0f; // Resetta il timer di blocco
         }
         else
@@ -187,7 +187,7 @@ public class EnemyAI : MonoBehaviour
 
             if (stuckTimer >= maxStuckTime)
             {
-                Debug.LogWarning("Il nemico è bloccato durante l'inseguimento. Tentativo di percorso alternativo.");
+                //Debug.LogWarning("Il nemico è bloccato durante l'inseguimento. Tentativo di percorso alternativo.");
                 stuckTimer = 0f;
 
                 // Prova un punto intermedio verso il giocatore
@@ -199,11 +199,11 @@ public class EnemyAI : MonoBehaviour
                 if (NavMesh.SamplePosition(intermediatePoint, out hit, retryDistance, NavMesh.AllAreas))
                 {
                     agent.SetDestination(hit.position);
-                    Debug.Log($"Percorso alternativo impostato verso: {hit.position}");
+                    //Debug.Log($"Percorso alternativo impostato verso: {hit.position}");
                 }
                 else
                 {
-                    Debug.LogWarning("Percorso alternativo non trovato. Tornando al pattugliamento.");
+                    //Debug.LogWarning("Percorso alternativo non trovato. Tornando al pattugliamento.");
                     currentState = EnemyState.Patrolling;
                 }
             }
@@ -216,7 +216,7 @@ public class EnemyAI : MonoBehaviour
         isAttacking = true;
         agent.SetDestination(transform.position); // Blocca il movimento
         transform.LookAt(player);
-        Debug.Log("Attaccando il giocatore.");
+        //Debug.Log("Attaccando il giocatore.");
         //Invoke(nameof(ResetAttack), 1f); // Simula un intervallo tra gli attacchi
         PlayerDie();
     }
@@ -230,7 +230,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!agent.hasPath && !agent.pathPending)
         {
-            Debug.LogWarning("Il nemico sembra bloccato. Tentativo di riposizionamento.");
+            //Debug.LogWarning("Il nemico sembra bloccato. Tentativo di riposizionamento.");
             currentState = EnemyState.Patrolling;
             SearchWalkPoint();
         }
@@ -240,7 +240,7 @@ public class EnemyAI : MonoBehaviour
     {
         walkPoint = collectible.position;
         isWalkPointSet = true;
-        Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
+        //Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
     }
 
     private void HandleTeleport(Transform location)
@@ -249,11 +249,11 @@ public class EnemyAI : MonoBehaviour
         transform.position = location.position;
         agent.enabled = true;
         isWalkPointSet = false;
-        Debug.Log($"Enemy updated position to {location.position} after teleport invocation.");
+        //Debug.Log($"Enemy updated position to {location.position} after teleport invocation.");
     }
     #endregion
 
-    #region Debugging
+    #region //Debugging
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

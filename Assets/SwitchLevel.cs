@@ -11,6 +11,7 @@ public class SwitchLevel : MonoBehaviour
     #region Private variables
     [SerializeField] private SceneHandler sceneHandler;
     [SerializeField] private string secondoLevelName;
+    [SerializeField] private SceneData sceneData;
 
     #endregion
 
@@ -23,16 +24,16 @@ public class SwitchLevel : MonoBehaviour
     #region Lifecycle
     void Awake()
     {
-        
+
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
     #endregion
 
@@ -45,6 +46,9 @@ public class SwitchLevel : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             sceneHandler.LoadScene(secondoLevelName);
+            sceneHandler.ClearPlayerRefs();
+            sceneData.sceneName = "Level 02";
+            Debug.Log("Nome della scena impostato a: " + sceneData.sceneName);
 
         }
     }

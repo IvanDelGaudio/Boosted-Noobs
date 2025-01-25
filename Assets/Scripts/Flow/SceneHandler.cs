@@ -10,6 +10,8 @@ public class SceneHandler : MonoBehaviour
     #region Private Variables
     private LoadSceneMode loadMode = LoadSceneMode.Single; // Mode of scene loading
     AsyncOperation currentSceneLoad = null;
+    private SceneData sceneData;
+
     #endregion
 
     #region Public Methods
@@ -22,6 +24,11 @@ public class SceneHandler : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Application quit");
+    }
+    public void ClearPlayerRefs()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Clear Refs");
     }
     #endregion
 
