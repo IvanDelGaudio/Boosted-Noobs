@@ -35,9 +35,10 @@ public class SaveManager : MonoBehaviour
     }
     private void ClearPlayerRefs()
     {
-        PlayerPrefs.DeleteAll();
+        if(Input.GetKeyUp(KeyCode.Escape))
+            PlayerPrefs.DeleteAll();
     }
     #endregion
-    }
+}
     
 

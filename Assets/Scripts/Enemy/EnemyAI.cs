@@ -2,87 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Timeline;
 
 public class EnemyAI : MonoBehaviour
 {
-    #region Public variables
-    #endregion
-
     #region Private variables
     [Header("Enemy Velocity")]
     [SerializeField] private float velocity;
 
     [Header("Nav Reference")]
     [SerializeField] private NavMeshAgent agent;
-    
+
     [Header("Player")]
     [SerializeField] private Transform player;
 
     [Header("Layer")]
     [SerializeField] private LayerMask whatIsGround, whatIsPlayer;
-    
-    [Header("Attack")]
-    [SerializeField] private float timeBetweenAttacks;
 
     [Header("Patrolling Settings")]
     [SerializeField] private float walkPointRange;
     [SerializeField] private float povRange;
     [SerializeField] private float attackRange;
 
-    private bool playerInPovRange, playerInAttackRange;
-    private bool isAlreadyAttacked;
     private bool isWalkPointSet;
     private Vector3 walkPoint;
-    #endregion
 
-    #region Public properties
-    #endregion
+    private float stuckTimer = 0f;
+    private const float maxStuckTime = 2f;
 
-    #region Private properties
+    private enum EnemyState { Patrolling, Chasing, Attacking }
+    private EnemyState currentState;
+
+    private bool isAttacking = false;
     #endregion
 
     #region Lifecycle
-    void Awake()
-    {
-        
-    }
     void Start()
     {
         agent.speed = velocity;
-
+        currentState = EnemyState.Patrolling; // Inizia pattugliando
     }
 
     void Update()
     {
-        //Check for sight and attack range
-        playerInPovRange = Physics.CheckSphere(transform.position, povRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        // Controlla lo stato del giocatore
+        bool playerInPovRange = Physics.CheckSphere(transform.position, povRange, whatIsPlayer);
+        bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInPovRange && !playerInAttackRange) Patroling();
-        if (playerInPovRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInPovRange) AttackPlayer();
+        // Cambia stato in base alla posizione del giocatore
+        if (playerInAttackRange)
+        {
+            currentState = EnemyState.Attacking;
+            isAttacking = true;
+
+        }
+        else if (playerInPovRange)
+        {
+            isAttacking = false;
+            currentState = EnemyState.Chasing;
+        }
+        else
+        {
+            isAttacking = false;
+            currentState = EnemyState.Patrolling;
+        }
+
+        // Gestisci comportamento in base allo stato
+        switch (currentState)
+        {
+            case EnemyState.Patrolling:
+                Patroling();               
+                break;
+            case EnemyState.Chasing:
+                ChasePlayer();
+                break;
+            case EnemyState.Attacking:
+                AttackPlayer();
+                break;
+        }
+
+        //HandleStuck();
     }
+
     private void OnEnable()
     {
         Collectables.OnCollected += HandleCollectibleCollected;
         Teleport.OnTeleport += HandleTeleport;
     }
 
-
     private void OnDisable()
     {
         Collectables.OnCollected -= HandleCollectibleCollected;
         Teleport.OnTeleport -= HandleTeleport;
-
     }
     #endregion
 
-    #region Public methods
-    #endregion
-
     #region Private methods
-    
     private void Patroling()
     {
         if (!agent.isOnNavMesh)
@@ -90,6 +104,7 @@ public class EnemyAI : MonoBehaviour
             Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
             return;
         }
+
         if (!isWalkPointSet) SearchWalkPoint();
 
         if (isWalkPointSet)
@@ -102,44 +117,42 @@ public class EnemyAI : MonoBehaviour
         if (distanceToWalkPoint.magnitude < 1.5f)
         {
             isWalkPointSet = false;
-            Debug.Log("Reached walk point.");
+            Debug.Log("Punto di pattugliamento raggiunto.");
         }
     }
 
     private void SearchWalkPoint()
     {
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-
-        Vector3 potentialPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        Debug.DrawRay(potentialPoint, Vector3.up * 10, Color.blue, 5f);
-        NavMeshHit hit = new NavMeshHit();
-        Debug.DrawRay(hit.position, Vector3.up * 10, Color.blue, 5f);
-        Debug.Log($"Trying point: {potentialPoint}");
-
-        if (NavMesh.SamplePosition(potentialPoint, out hit, walkPointRange, NavMesh.AllAreas))
+        // Esegui la ricerca del walk point solo se non si è in attacco
+        if (currentState == EnemyState.Attacking || isAttacking)
         {
-            walkPoint = hit.position;
-            isWalkPointSet = true;
-            Debug.DrawLine(transform.position, walkPoint, Color.green, 2f);
-
+            Debug.Log("Skip ricerca walk point durante l'attacco.");
+            return;
         }
-        else
+
+        isWalkPointSet = false;
+        for (int i = 0; i < 10; i++) // Limita a 10 tentativi
         {
-            Debug.Log("No valid walk point found. Retrying...");
-            isWalkPointSet = false; // Retry if no valid NavMesh point
-            Debug.DrawLine(potentialPoint, potentialPoint + Vector3.up * 5, Color.red, 2f);
+            float randomX = Random.Range(-walkPointRange, walkPointRange);
+            float randomZ = Random.Range(-walkPointRange, walkPointRange);
 
+            Vector3 potentialPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(potentialPoint, out hit, walkPointRange, NavMesh.AllAreas))
+            {
+                walkPoint = hit.position;
+                isWalkPointSet = true;
+                Debug.Log($"Walk point trovato: {walkPoint}");
+                return;
+            }
         }
+
+        Debug.LogWarning("Nessun punto valido trovato per il pattugliamento.");
     }
-
-
-    private float stuckTimer = 0f;
-    private const float maxStuckTime = 2f; // Time before handling stuck behavior
 
     private void ChasePlayer()
     {
-        // Verifica che l'agente sia abilitato e posizionato su un NavMesh
         if (!agent.isOnNavMesh)
         {
             Debug.LogWarning("Il NavMeshAgent non è posizionato correttamente su un NavMesh!");
@@ -148,89 +161,99 @@ public class EnemyAI : MonoBehaviour
 
         NavMeshPath path = new NavMeshPath();
 
-        // Calcola il percorso solo se l'agente è abilitato e correttamente configurato
+        // Calcola il percorso verso il giocatore
         if (agent.enabled && agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
         {
-            walkPoint = player.position;
-            isWalkPointSet = true;
             agent.SetDestination(player.position);
-            stuckTimer = 0f; // Reset timer when chasing successfully
+            Debug.Log("Inseguendo il giocatore.");
+            stuckTimer = 0f; // Resetta il timer di blocco
         }
         else
         {
-            Debug.Log("Player irraggiungibile. L'Enemy smetterà di inseguire.");
             stuckTimer += Time.deltaTime;
 
             if (stuckTimer >= maxStuckTime)
             {
-                Debug.Log("Enemy è bloccato. Passa alla modalità di pattugliamento.");
-                Patroling();
+                Debug.LogWarning("Il nemico è bloccato durante l'inseguimento. Tentativo di percorso alternativo.");
                 stuckTimer = 0f;
+
+                // Prova un punto intermedio verso il giocatore
+                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                float retryDistance = 5.0f; // Distanza del punto intermedio
+                Vector3 intermediatePoint = transform.position + directionToPlayer * retryDistance;
+
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(intermediatePoint, out hit, retryDistance, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                    Debug.Log($"Percorso alternativo impostato verso: {hit.position}");
+                }
+                else
+                {
+                    Debug.LogWarning("Percorso alternativo non trovato. Tornando al pattugliamento.");
+                    currentState = EnemyState.Patrolling;
+                }
             }
         }
     }
 
 
+    private void AttackPlayer()
+    {
+        isAttacking = true;
+        agent.SetDestination(transform.position); // Blocca il movimento
+        transform.LookAt(player);
+        Debug.Log("Attaccando il giocatore.");
+        //Invoke(nameof(ResetAttack), 1f); // Simula un intervallo tra gli attacchi
+        PlayerDie();
+    }
 
+    private void PlayerDie()
+    {
+    }
+
+
+    private void HandleStuck()
+    {
+        if (!agent.hasPath && !agent.pathPending)
+        {
+            Debug.LogWarning("Il nemico sembra bloccato. Tentativo di riposizionamento.");
+            currentState = EnemyState.Patrolling;
+            SearchWalkPoint();
+        }
+    }
 
     private void HandleCollectibleCollected(Transform collectible)
     {
-        // Set the new walk point to the collectible's position
         walkPoint = collectible.position;
         isWalkPointSet = true;
-
         Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
     }
+
     private void HandleTeleport(Transform location)
     {
-        // Temporarily disable the NavMeshAgent
         agent.enabled = false;
-
-        // Teleport to the target location
         transform.position = location.position;
-
-        // Re-enable the NavMeshAgent
         agent.enabled = true;
-
         isWalkPointSet = false;
-
         Debug.Log($"Enemy updated position to {location.position} after teleport invocation.");
-
     }
-    private void AttackPlayer()
-    {
-        //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
+    #endregion
 
-        transform.LookAt(player);
-
-        if (!isAlreadyAttacked)
-        {
-            Debug.Log("Enemy is attacking player");
-            isAlreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-    private void ResetAttack()
-    {
-        isAlreadyAttacked = false;
-    }
-   
+    #region Debugging
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-        
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, povRange);
+
         if (isWalkPointSet)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(walkPoint, 0.5f);
         }
-
     }
     #endregion
-
-
 }
