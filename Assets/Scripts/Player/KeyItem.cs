@@ -11,6 +11,7 @@ using UnityEngine;
         {
             if (other.CompareTag("Player"))
             {
+                Debug.Log("la chiave è stata presa");
                 Inventory.instance.AddItem(item);
                 Destroy(gameObject);
             }
