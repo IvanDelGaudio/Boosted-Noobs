@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Generator : MonoBehaviour
 {
@@ -20,12 +21,14 @@ public class Generator : MonoBehaviour
     [SerializeField]
     Inventory.FuseItem requiredFuseGreen;
     [SerializeField]
-    public GameObject CanvasFuse;
+    public Text text;
     [SerializeField]
     public Renderer Warning;
+    public Material material;
     private bool ChFuseRed;
     private bool ChFuseBlue;
     private bool ChFuseGreen;
+    private bool completedFuses;
 
     private void Start()
     {
@@ -82,7 +85,11 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasFuse.SetActive(true);
+            if (completedFuses == false)
+            {
+                text.color = Color.white;
+                text.text = "Insert the fuses";
+            }
             RequiredRedFuse(requiredFuseRed);
             RequiredBlueFuse(requiredFuseBlue);
             RequiredGreenFuse(requiredFuseGreen);
@@ -102,7 +109,7 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasFuse.SetActive(false);
+            text.text = "";
             Debug.Log("Player has exit");
             playerInRange = false;
         }
@@ -150,8 +157,9 @@ public class Generator : MonoBehaviour
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
             generatorOpen = true;
-            Warning.material.color = Color.red;
+            Warning.material = material;
             Debug.Log("Luca ci uccide");
+            completedFuses = true;
         }
     }
 }

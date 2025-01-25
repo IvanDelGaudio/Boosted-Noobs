@@ -66,6 +66,7 @@ public class EnemyAI : MonoBehaviour
         {
             currentState = EnemyState.Attacking;
             isAttacking = true;
+            sfx.PlaySFX(0);
 
         }
         else if (playerInPovRange)
