@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+[RequireComponent(typeof(SFX))]
 public class Generator : MonoBehaviour
 {
     [SerializeField]
@@ -20,16 +21,22 @@ public class Generator : MonoBehaviour
     [SerializeField]
     Inventory.FuseItem requiredFuseGreen;
     [SerializeField]
-    public GameObject CanvasFuse;
+    public Text text;
     [SerializeField]
-    public Renderer Warning;
+    public LightManager lightManagere;
+    public KeyCheck key;
+    public Light light;
+    public Renderer button;
+    public Material material;
     private bool ChFuseRed;
     private bool ChFuseBlue;
     private bool ChFuseGreen;
+    private bool completedFuses;
+    private SFX sfx;
 
     private void Start()
     {
-
+        sfx = GetComponent<SFX>();
     }
 
     private void Update()
@@ -82,7 +89,11 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasFuse.SetActive(true);
+            if (completedFuses == false)
+            {
+                text.color = Color.white;
+                text.text = "Insert the fuses";
+            }
             RequiredRedFuse(requiredFuseRed);
             RequiredBlueFuse(requiredFuseBlue);
             RequiredGreenFuse(requiredFuseGreen);
@@ -102,7 +113,7 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasFuse.SetActive(false);
+            text.text = "";
             Debug.Log("Player has exit");
             playerInRange = false;
         }
@@ -149,9 +160,14 @@ public class Generator : MonoBehaviour
     {
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
+            sfx.PlaySFX(0);
+            button.material =material;
+            light.color = Color.green;
+            key.requiredKey = true;
             generatorOpen = true;
-            Warning.material.color = Color.red;
+            lightManagere.ChangeColorButton2();
             Debug.Log("Luca ci uccide");
+            completedFuses = true;
         }
     }
 }

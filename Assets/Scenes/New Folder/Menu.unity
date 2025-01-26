@@ -783,7 +783,7 @@ PrefabInstance:
       objectReference: {fileID: 1011248693}
     - target: {fileID: 5361437616489611962, guid: 88de3fbfd589d6f4baede4b66e948d0a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
+      value: PlayGame
       objectReference: {fileID: 0}
     - target: {fileID: 5523152103484511183, guid: 88de3fbfd589d6f4baede4b66e948d0a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -935,7 +935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8780906068805185422, guid: 88de3fbfd589d6f4baede4b66e948d0a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
+      value: PlayNewGame
       objectReference: {fileID: 0}
     - target: {fileID: 8780906068805185422, guid: 88de3fbfd589d6f4baede4b66e948d0a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -1264,13 +1264,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
+      propertyPath: sceneData
+      value: 
+      objectReference: {fileID: 11400000, guid: fca2b8f80ec176f40a71bc5d9d5fc295, type: 2}
+    - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
       propertyPath: sceneAddress
-      value: MarcelloParte01 1
+      value: Level 1
       objectReference: {fileID: 0}
     - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
       propertyPath: playGameButton
       value: 
       objectReference: {fileID: 1241150767}
+    - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
+      propertyPath: sceneNameLevel1
+      value: Level 1 Hamza
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
+      propertyPath: sceneNameLevel2
+      value: Level 02
+      objectReference: {fileID: 0}
     - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
       propertyPath: panels.Array.data[0]
       value: 

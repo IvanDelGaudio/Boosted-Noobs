@@ -21,6 +21,7 @@ public class PlayerRefsHandler : MonoBehaviour
     public void ClearPlayerRefs()
     {
         PlayerPrefs.DeleteAll();
+        Debug.Log("Clear Refs");
     }
 
     public void CheckExistingPlayRefs()

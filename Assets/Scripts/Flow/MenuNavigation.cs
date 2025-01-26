@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +12,9 @@ public class MenuNavigation : MonoBehaviour
     #region Private Variables
     [Header("Data")]
     [SerializeField]
-    private string sceneAddress;
+    private SceneData sceneData;
+    [SerializeField]
+    private string sceneNameLevel1;
 
     [Header("Panels")]
     [SerializeField]
@@ -58,9 +61,29 @@ public class MenuNavigation : MonoBehaviour
     #endregion
 
     #region Public Methods
-    public void Play()
+    public void PlayNewGame()
     {
-        sceneHandler.LoadScene(sceneAddress);
+        ChangeSceneName(sceneNameLevel1);
+        Debug.Log(sceneData.name);
+        if (!string.IsNullOrEmpty(sceneData.sceneName))
+        {
+            sceneHandler.LoadScene(sceneData.sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("Il nome della scena non è stato impostato nel SceneData ScriptableObject.");
+        }
+    }
+    public void PlayGame()
+    {
+        if (!string.IsNullOrEmpty(sceneData.sceneName))
+        {
+            sceneHandler.LoadScene(sceneData.sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("Il nome della scena non è stato impostato nel SceneData ScriptableObject.");
+        }
     }
 
     public void Quit()
@@ -168,6 +191,21 @@ public class MenuNavigation : MonoBehaviour
         }
     }
 
+    private void ChangeSceneName(string newSceneName)
+    {
+        if (sceneData != null)
+        {
+            sceneData.sceneName = newSceneName;
 
+        #if UNITY_EDITOR
+            EditorUtility.SetDirty(sceneData);
+            AssetDatabase.SaveAssets();
+        #endif
+        }
+        else
+        {
+            Debug.LogError("SceneData non è stato assegnato.");
+        }
+    }
     #endregion
 }
