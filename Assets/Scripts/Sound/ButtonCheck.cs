@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ButtonCheck : MonoBehaviour
 {
     #region Public Variables
-    public Text text;
+    public GameObject text;
     public KeyCheck key;
     public Material material;
     public AnimationButton animButton;
@@ -26,7 +26,7 @@ public class ButtonCheck : MonoBehaviour
     #region Lifecycle
     private void Start()
     {
-        text.text = null;
+        
         sfx_ = GetComponent<SFX>();
     }
     #endregion
@@ -42,7 +42,7 @@ public class ButtonCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text = "Press E";
+            text.SetActive(true);
             Debug.Log("Player has enter");
             playerInRange = true;
         }
@@ -52,7 +52,7 @@ public class ButtonCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text = "";
+            text.SetActive(false);
             Debug.Log("Player has exit");
             playerInRange = false;
         }

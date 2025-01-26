@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FuseItem : MonoBehaviour
 {
+    public IconsManager FuseMenu;
     [SerializeField]
     Inventory.FuseItem fuse;
 
@@ -11,6 +12,7 @@ public class FuseItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            FuseMenu.ToggleFuseIcon();
             Inventory.instance.AddFuse(fuse);
             Destroy(gameObject);
         }
