@@ -70,6 +70,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 87534768072a7d448936496b6e07d414, type: 3}
       insertIndex: -1
       addedObject: {fileID: 759474546317405895}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 87534768072a7d448936496b6e07d414, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8657794255621301989}
     - targetCorrespondingSourceObject: {fileID: 3236730794000604660, guid: 87534768072a7d448936496b6e07d414, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9208243494079362430}
@@ -83,6 +86,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4393551906292519112}
   m_SourcePrefab: {fileID: 100100000, guid: 87534768072a7d448936496b6e07d414, type: 3}
+--- !u!4 &1325972292296817932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 87534768072a7d448936496b6e07d414, type: 3}
+  m_PrefabInstance: {fileID: 1579767016240306919}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1814137470031030198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 87534768072a7d448936496b6e07d414, type: 3}
@@ -100,10 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2d35b1ed03e7040b149b644e36533c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixerGroup: {fileID: 0}
-  audioClip: []
-  positionObject: {fileID: 0}
-  dimention: 2
+  mixerGroup: {fileID: -8140673000742482248, guid: 6fad79122886640489f8d852d5fa485a, type: 2}
+  audioClip:
+  - {fileID: 8300000, guid: f3cbd1a04de5e004fbee51c181f9709d, type: 3}
+  positionObject: {fileID: 1325972292296817932}
+  dimention: 1
 --- !u!95 &8455328028208250831
 Animator:
   serializedVersion: 5
@@ -139,6 +148,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   controlOpenDoor: 0
+--- !u!114 &8657794255621301989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814137470031030198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c09a3b85b04677449d02c69d686a8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+  timeForSetDoorClose: 2
+  isdoorOpen: 0
+  doorOpenCheckKey: 0
+  isExit: 0
+  requiredItem: 0
+  text: {fileID: 0}
+  requiredKey: 0
 --- !u!1 &1896595166952736273 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8088892665240675082, guid: 87534768072a7d448936496b6e07d414, type: 3}

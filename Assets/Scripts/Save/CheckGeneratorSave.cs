@@ -25,10 +25,6 @@ public class CheckGeneratorSave : MonoBehaviour
     {
         collider = gameObject.GetComponent<BoxCollider>();
     }
-    void Start()
-    {
-    }
-
     void Update()
     {
         generatorOpen = generator.generatorOpen;

@@ -44,7 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09fa3b5d86b4b18469dd9dc4e9458dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveCheckpoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  saveCheckpoints: []
