@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(SFX))]
@@ -10,7 +9,7 @@ public class Buttonlevel1 : MonoBehaviour
     public LightManager button;
     public Material MaterialGreenButton;
     public AnimationButton aniButton;
-    public Text text;
+    public GameObject text;
     private SFX sfx;
     #endregion
     #region Private Variables
@@ -35,7 +34,7 @@ public class Buttonlevel1 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text = "Press E";
+            text.SetActive(true);
             playerInRange = true;
         }
         if (Input.GetKeyUp(KeyCode.E) && playerInRange && endSound==false)
@@ -46,7 +45,7 @@ public class Buttonlevel1 : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        text.text = "";
+        text.SetActive(false);
         if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;

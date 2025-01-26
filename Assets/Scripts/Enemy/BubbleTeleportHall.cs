@@ -6,10 +6,12 @@ public class BubbleTeleportHall : MonoBehaviour
 {
     #region Public variables
     public TeleportHall associatedTeleport;
+    public SFX sfx;
 
     #endregion
 
     #region Private variables
+
     #endregion
 
     #region Public properties
@@ -25,6 +27,7 @@ public class BubbleTeleportHall : MonoBehaviour
     }
     void Start()
     {
+        sfx = GetComponent<SFX>();
 
     }
 
@@ -44,6 +47,7 @@ public class BubbleTeleportHall : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            sfx.PlaySFX(0);
             associatedTeleport?.HallTeleportation(associatedTeleport.transform);
             Destroy(gameObject); // Remove the collectible
         }

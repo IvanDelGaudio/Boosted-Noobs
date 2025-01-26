@@ -21,7 +21,7 @@ public class Generator : MonoBehaviour
     [SerializeField]
     Inventory.FuseItem requiredFuseGreen;
     [SerializeField]
-    public Text text;
+    public GameObject text;
     [SerializeField]
     public LightManager lightManagere;
     public KeyCheck key;
@@ -92,8 +92,7 @@ public class Generator : MonoBehaviour
         {
             if (completedFuses == false)
             {
-                text.color = Color.white;
-                text.text = "Insert the fuses";
+                text.SetActive(true);
             }
             RequiredRedFuse(requiredFuseRed);
             RequiredBlueFuse(requiredFuseBlue);
@@ -114,7 +113,7 @@ public class Generator : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text = "";
+            text.SetActive(false);
             Debug.Log("Player has exit");
             playerInRange = false;
         }
