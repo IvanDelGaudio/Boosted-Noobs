@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(SFX))]
 public class BubbleTeleport : MonoBehaviour
 {
     #region Public variables
@@ -10,6 +10,7 @@ public class BubbleTeleport : MonoBehaviour
     #endregion
 
     #region Private variables
+    private SFX sfx;
     #endregion
 
     #region Public properties
@@ -25,7 +26,7 @@ public class BubbleTeleport : MonoBehaviour
     }
     void Start()
     {
-
+        sfx = GetComponent<SFX>();
     }
 
     void Update()
@@ -45,6 +46,7 @@ public class BubbleTeleport : MonoBehaviour
         if (Vector3.Distance(player.position, transform.position) < 1.5)
         {
             associatedTeleport?.Teleportation(associatedTeleport.transform);
+            sfx.PlaySFX(0);
             Destroy(gameObject); // Remove the collectible
             return true;
         }
