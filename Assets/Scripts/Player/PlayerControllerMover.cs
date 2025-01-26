@@ -33,7 +33,7 @@ public class PlayerControllerMover : MonoBehaviour
     private OrientMode orientMode = OrientMode.Movement;
 
     [SerializeField]
-    private Transform spawnPosition;
+    //private Transform spawnPosition;
 
     private float orientToReachTime = 0.5f;
     private Vector3 orientToCurrentSpeed = Vector3.zero;
@@ -53,13 +53,13 @@ public class PlayerControllerMover : MonoBehaviour
     {
         sfx_ = GetComponent<SFX>();
         characterController = GetComponent<CharacterController>();
-        transform.position = spawnPosition.position;
+        //transform.position = spawnPosition.position;
 
     }
 
     void Start()
     {
-        transform.position = spawnPosition.position;
+        //transform.position = spawnPosition.position;
 
         if (renderRoot != null)
             renderRoot.position -= transform.up * characterController.skinWidth;
