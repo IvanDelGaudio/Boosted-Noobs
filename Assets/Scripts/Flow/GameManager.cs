@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject subPanel;
     [SerializeField]
     private GameObject checkPointPanel;
+    [SerializeField]
+    private GameObject creditsPanel;
 
     private bool isPaused = false;
     private SceneHandler sceneHandler;
@@ -33,17 +35,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause(pausePanel);
-            }
-        }
+        PauseKeyCheck();
+        CreditsKeyCheck();
     }
     #endregion
 
@@ -52,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         DeactivatePanel(pausePanel);
 
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
         isPaused = false;
     }
 
@@ -86,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void Pause(GameObject panel)
     {
         ActivatePanel(panel);
-        Time.timeScale = 0f;
+        Time.timeScale = 0.0f;
         isPaused = true;
     }
 
@@ -105,6 +98,29 @@ public class GameManager : MonoBehaviour
     private void DeactivatePanel(GameObject panel)
     {
         panel.SetActive(false);
+    }
+
+    private void PauseKeyCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause(pausePanel);
+            }
+        }
+    }
+
+    private void CreditsKeyCheck()
+    {
+        if (creditsPanel.activeSelf && Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            GoToMenu();
+        }
     }
     #endregion
 }
