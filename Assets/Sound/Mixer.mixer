@@ -35,6 +35,7 @@ AudioMixerGroupController:
   - {fileID: -8140673000742482248}
   - {fileID: 4072696863042640586}
   - {fileID: 5174739836098767361}
+  - {fileID: 6883756483038440383}
   m_Volume: f029a6c7574079443a4af5adfb668a33
   m_Pitch: 4e1516020354f2a45b2cc1ec59161fb7
   m_Send: 00000000000000000000000000000000
@@ -186,6 +187,7 @@ AudioMixerController:
     - f468b33fd9f003143a8cabaa0e9f7a5e
     - 2d62e60440dfc4e489c63d9e736002d3
     - ada1229efc86f3b488df64da55599642
+    - 60cf64b710f600f488cec93888134724
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -251,6 +253,20 @@ AudioMixerEffectController:
   m_MixLevel: a0852d4fa71da8943b5585ce882db015
   m_Parameters: []
   m_SendTarget: {fileID: 7962422158374620400}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &654575288881693109
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 563fa67d22b9ec24c870968d6e7f584b
+  m_EffectName: Attenuation
+  m_MixLevel: 672dfa7166e44184e98eca80c54b1d2f
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
 --- !u!243 &956361677805526424
@@ -362,6 +378,25 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -3172519986832996470}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &6883756483038440383
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpaceShip
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 60cf64b710f600f488cec93888134724
+  m_Children: []
+  m_Volume: 815483e447586944986fb2111d5dd3a8
+  m_Pitch: 07c3e5179353d714289163360d618e9f
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 654575288881693109}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
