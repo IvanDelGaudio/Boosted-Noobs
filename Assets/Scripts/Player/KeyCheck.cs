@@ -20,13 +20,14 @@ public class KeyCheck : MonoBehaviour
     [SerializeField]
     Inventory.Item requiredItem;
     [SerializeField]
-    public Text text;
+    public GameObject text;
     public bool requiredKey=false;
     private AnimationDoorController anim;
-    
+    private IconsManager keyMenu;
+
     private void Start()
     {
-    text.text="";
+    keyMenu = GameObject.FindAnyObjectByType<IconsManager>();
     anim = GetComponent<AnimationDoorController>();
     }
 
@@ -61,10 +62,11 @@ public class KeyCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!requiredKey)
+            if(requiredKey == false)
             {
-                text.text = "Press E";
+                text.SetActive(true);
             }
+       
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
             playerInRange = true;
@@ -75,6 +77,7 @@ public class KeyCheck : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.E) && doorOpenCheckKey == true && anim.controlOpenDoor == false)
         {
+                
                 CheckDoorKey();
         }
         
@@ -83,9 +86,13 @@ public class KeyCheck : MonoBehaviour
       {
         if (other.gameObject.CompareTag("Player") )
           {
-              text.text="";
-              Debug.Log("Player has exit");
-              playerInRange = false;
+            if (requiredKey == true)
+            {
+                text.SetActive(false);
+            }
+            text.SetActive(false);
+            Debug.Log("Player has exit");
+            playerInRange = false;
           }
           
       }
@@ -103,6 +110,7 @@ public class KeyCheck : MonoBehaviour
         requiredKey = RequiredItems(requiredItem);
         if (isdoorOpen == false && requiredKey == true )
         {
+            keyMenu.ToggleKeyIcon();
             anim.SetTrueStateOfTheDoor();
             isdoorOpen = true;
             isExit = true;
