@@ -25,7 +25,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackRange;
 
     [Header("SFX")]
-    [SerializeField] private SFX sfx;
+    [SerializeField] 
+    private SFX sfx;
+
 
     private bool isWalkPointSet;
     private Vector3 walkPoint;
@@ -52,27 +54,21 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        
+        if (transform.position != Vector3.zero)
+        {
+            sfx.PlaySFX(0);
+        }
         // Controlla lo stato del giocatore
         bool playerInPovRange = Physics.CheckSphere(transform.position, povRange, whatIsPlayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        if (transform.position != Vector3.zero && playerInPovRange)
-        {
-
-        }
         // Cambia stato in base alla posizione del giocatore
         if (playerInAttackRange)
         {
             currentState = EnemyState.Attacking;
             isAttacking = true;
-            sfx.PlaySFX(1);
-            sfx.audioSource.transform.SetParent(transform);
         }
         else if (playerInPovRange)
         {
-            sfx.PlaySFX(0);
-            sfx.audioSource.transform.SetParent(transform);
-
             isAttacking = false;
             currentState = EnemyState.Chasing;
         }
