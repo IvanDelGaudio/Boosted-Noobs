@@ -42,6 +42,7 @@ public class PlayerControllerMover : MonoBehaviour
     private Vector3 spawnPositionRefs;
     public GameManager gameover;
 
+
     private bool isGrounded
     {
         get
@@ -184,6 +185,7 @@ public class PlayerControllerMover : MonoBehaviour
     private void Die()
     {
         gameover.GameOver();
+        
         Destroy(gameObject);
     }
 

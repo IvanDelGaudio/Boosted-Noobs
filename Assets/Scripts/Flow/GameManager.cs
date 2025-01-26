@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     private void CreditsKeyCheck()
     {
-        if (creditsPanel.activeSelf && Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (creditsPanel.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
             GoToMenu();
         }
