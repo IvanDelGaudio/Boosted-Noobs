@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(SFX))]
-public class BubbleTeleport : MonoBehaviour
+
+public class BubbleTeleportMaze : MonoBehaviour
 {
     #region Public variables
-    public Teleport associatedTeleport;
+    public TeleportMaze associatedTeleport;
 
     #endregion
 
     #region Private variables
-    private SFX sfx;
     #endregion
 
     #region Public properties
@@ -26,7 +25,7 @@ public class BubbleTeleport : MonoBehaviour
     }
     void Start()
     {
-        sfx = GetComponent<SFX>();
+
     }
 
     void Update()
@@ -40,17 +39,13 @@ public class BubbleTeleport : MonoBehaviour
     #endregion
 
     #region Private methods
-    
-    public bool CheckDistance(Transform player)
+    public void OnTriggerEnter(Collider other)
     {
-        if (Vector3.Distance(player.position, transform.position) < 1.5)
+        if (other.tag == "Player")
         {
-            associatedTeleport?.Teleportation(associatedTeleport.transform);
-            sfx.PlaySFX(0);
+            associatedTeleport?.MazeTeleportation(associatedTeleport.transform);
             Destroy(gameObject); // Remove the collectible
-            return true;
         }
-        return false;   
     }
     #endregion
 

@@ -40,15 +40,22 @@ public class CollectablesManager : MonoBehaviour
     #region Private methods
     private void CheckDistance()
     {
+        if (player == null)
+        {
+            Debug.LogWarning("Player reference is null. Skipping distance check.");
+            return; // Interrompi l'esecuzione se il player non esiste
+        }
+
         for (int i = collectables.Count - 1; i >= 0; i--)
         {
-            if (collectables[i].CheckDistance(player))
+            if (collectables[i] != null && collectables[i].CheckDistance(player))
             {
                 collectables.RemoveAt(i); // Rimuovi l'oggetto dalla lista
             }
         }
     }
+
     #endregion
 
-    
+
 }

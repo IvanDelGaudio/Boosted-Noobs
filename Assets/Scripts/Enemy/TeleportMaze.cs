@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour
+public class TeleportMaze : MonoBehaviour
 {
     #region Public variables
-    public delegate void TeleportationTriggered(Transform location);
-    public static event TeleportationTriggered OnTeleportation;
+    public delegate void MazeTeleportationTriggered(Transform location);
+    public static event MazeTeleportationTriggered OnMazeTeleportation;
     #endregion
 
     #region Private variables
@@ -36,11 +36,11 @@ public class Teleport : MonoBehaviour
     #endregion
 
     #region Public methods
-    public void Teleportation(Transform teleportPosition)
+    public void MazeTeleportation(Transform mazeTeleportPosition)
     {
-        OnTeleportation?.Invoke(teleportPosition);
+        OnMazeTeleportation?.Invoke(mazeTeleportPosition);
         Debug.Log(this.transform.position);
-        Debug.Log($"Teleport gestito da {gameObject.name} con position {teleportPosition.position}");
+        Debug.Log($"Teleport Maze gestito da {gameObject.name} con position {mazeTeleportPosition.position}");
         Destroy(this.gameObject);
     }
     #endregion

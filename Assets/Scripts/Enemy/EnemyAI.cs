@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
     #region Private variables
     [Header("Enemy Velocity")]
     [SerializeField] private float velocity;
+    [SerializeField] private float velocityHall;
 
     [Header("Nav Reference")]
     [SerializeField] private NavMeshAgent agent;
@@ -22,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Patrolling Settings")]
     [SerializeField] private float walkPointRange;
     [SerializeField] private float povRange;
+    [SerializeField] private float povRangeHall;
     [SerializeField] private float attackRange;
 
     [Header("SFX")]
@@ -39,6 +41,8 @@ public class EnemyAI : MonoBehaviour
     private EnemyState currentState;
 
     private bool isAttacking = false;
+
+    private float povRangeMaze;
     #endregion
 
     #region Lifecycle
@@ -50,6 +54,7 @@ public class EnemyAI : MonoBehaviour
     {
         agent.speed = velocity;
         currentState = EnemyState.Patrolling; // Inizia pattugliando
+        povRangeMaze = povRange;
     }
 
     void Update()
@@ -98,13 +103,15 @@ public class EnemyAI : MonoBehaviour
     private void OnEnable()
     {
         Collectables.OnCollected += HandleCollectibleCollected;
-        Teleport.OnTeleportation += HandleTeleport;
+        TeleportMaze.OnMazeTeleportation += HandleMazeTeleport;
+        TeleportHall.OnHallTeleportation += HandleHallTeleport;
     }
 
     private void OnDisable()
     {
         Collectables.OnCollected -= HandleCollectibleCollected;
-        Teleport.OnTeleportation -= HandleTeleport;
+        TeleportMaze.OnMazeTeleportation -= HandleMazeTeleport;
+        TeleportHall.OnHallTeleportation -= HandleHallTeleport;
     }
     #endregion
 
@@ -242,13 +249,25 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log($"Enemy updated walkpoint to {walkPoint} after collectible interaction.");
     }
 
-    private void HandleTeleport(Transform location)
+    private void HandleHallTeleport(Transform location)
     {
         agent.enabled = false;
         transform.position = location.position;
         agent.enabled = true;
         isWalkPointSet = false;
+        agent.speed = velocityHall;
+        povRange = povRangeHall;
         //Debug.Log($"Enemy updated position to {location.position} after teleport invocation.");
+    }
+    private void HandleMazeTeleport(Transform location)
+    {
+        agent.enabled = false;
+        transform.position = location.position;
+        agent.enabled = true;
+        isWalkPointSet = false;
+        agent.speed = velocity;
+        povRange = povRangeMaze;
+
     }
     #endregion
 

@@ -64,7 +64,6 @@ public class MenuNavigation : MonoBehaviour
     public void PlayNewGame()
     {
         ChangeSceneName(sceneNameLevel1);
-        Debug.Log(sceneData.name);
         if (!string.IsNullOrEmpty(sceneData.sceneName))
         {
             sceneHandler.LoadScene(sceneData.sceneName);

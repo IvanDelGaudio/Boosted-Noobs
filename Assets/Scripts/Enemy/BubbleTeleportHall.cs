@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleManager : MonoBehaviour
+public class BubbleTeleportHall : MonoBehaviour
 {
     #region Public variables
+    public TeleportHall associatedTeleport;
+
     #endregion
 
     #region Private variables
-    [SerializeField] private List<BubbleTeleportHall> bubblesTeleports;
-    [SerializeField] private Transform player;
     #endregion
 
     #region Public properties
@@ -21,24 +21,33 @@ public class BubbleManager : MonoBehaviour
     #region Lifecycle
     void Awake()
     {
-        
+
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
+
     }
     #endregion
 
     #region Public methods
+
     #endregion
 
     #region Private methods
-   
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            associatedTeleport?.HallTeleportation(associatedTeleport.transform);
+            Destroy(gameObject); // Remove the collectible
+        }
+    }    
     #endregion
 
-    
 }
