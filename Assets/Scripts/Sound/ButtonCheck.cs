@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(SFX))]
@@ -10,7 +11,6 @@ public class ButtonCheck : MonoBehaviour
     public KeyCheck key;
     public Material material;
     public AnimationButton animButton;
-
     #endregion
     #region Private Variables
     [SerializeField]
@@ -63,6 +63,7 @@ public class ButtonCheck : MonoBehaviour
         {
             sfx_.PlaySFX(0);
             finishedSound = true;
+            animButton.SetTrueAnimationbutton();
         }
 
     }

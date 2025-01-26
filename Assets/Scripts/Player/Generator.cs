@@ -23,7 +23,10 @@ public class Generator : MonoBehaviour
     [SerializeField]
     public Text text;
     [SerializeField]
-    public Renderer Warning;
+    public LightManager lightManagere;
+    public KeyCheck key;
+    public Light light;
+    public Renderer button;
     public Material material;
     private bool ChFuseRed;
     private bool ChFuseBlue;
@@ -156,8 +159,11 @@ public class Generator : MonoBehaviour
     {
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
+            button.material =material;
+            light.color = Color.green;
+            key.requiredKey = true;
             generatorOpen = true;
-            Warning.material = material;
+            lightManagere.ChangeColorButton2();
             Debug.Log("Luca ci uccide");
             completedFuses = true;
         }

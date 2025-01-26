@@ -6,7 +6,7 @@ public class AnimationButton : MonoBehaviour
 {
     #region Public Variables
     [SerializeField]
-    private string animatorActiveButton = "Active";
+    private string animatorActiveButton ="Active";
     private int animatorBoolButton = 0;
     private bool controlAnimation=false;
     private Animator animator;
@@ -26,7 +26,7 @@ public class AnimationButton : MonoBehaviour
     {
         Debug.Log("sono entrato");
         controlAnimation = true;
-        animator.SetBool(animatorActiveButton, controlAnimation);
+        animator.SetBool(animatorActiveButton, true);
 
     }
     #endregion

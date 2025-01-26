@@ -1249,7 +1249,7 @@ PrefabInstance:
       objectReference: {fileID: 1241150767}
     - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
       propertyPath: sceneNameLevel1
-      value: Level 1
+      value: Level 1 Hamza
       objectReference: {fileID: 0}
     - target: {fileID: 3364761172689436767, guid: 21d8a2157f5d4444c918bf9ad0ce4478, type: 3}
       propertyPath: sceneNameLevel2
@@ -1600,8 +1600,6 @@ MonoBehaviour:
   - CheckpointPositionX
   - CheckpointPositionZ
   - CheckpointPositionY
-  sceneData: {fileID: 11400000, guid: fca2b8f80ec176f40a71bc5d9d5fc295, type: 2}
-  sceneNameLevel1: Level 1
 --- !u!1 &1774437096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8367257996909273195, guid: 88de3fbfd589d6f4baede4b66e948d0a, type: 3}
