@@ -8,7 +8,7 @@ public class BubbleManager : MonoBehaviour
     #endregion
 
     #region Private variables
-    [SerializeField] private List<BubbleTeleport> bubblesTeleports;
+    [SerializeField] private List<BubbleTeleportHall> bubblesTeleports;
     [SerializeField] private Transform player;
     #endregion
 
@@ -30,7 +30,6 @@ public class BubbleManager : MonoBehaviour
 
     void Update()
     {
-        CheckDistance();
     }
     #endregion
 
@@ -38,16 +37,7 @@ public class BubbleManager : MonoBehaviour
     #endregion
 
     #region Private methods
-    private void CheckDistance()
-    {
-        for (int i = bubblesTeleports.Count - 1; i >= 0; i--)
-        {
-            if (bubblesTeleports[i].CheckDistance(player))
-            {
-                bubblesTeleports.RemoveAt(i); // Rimuovi l'oggetto dalla lista
-            }
-        }
-    }
+   
     #endregion
 
     

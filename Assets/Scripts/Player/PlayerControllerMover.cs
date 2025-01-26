@@ -39,7 +39,6 @@ public class PlayerControllerMover : MonoBehaviour
     private float verticalSpeed = 0.0f;
     private SFX sfx_;
     private Vector3 initPositionPlayer;
-    private Vector3 spawnPositionRefs;
 
     private bool isGrounded
     {
@@ -53,42 +52,13 @@ public class PlayerControllerMover : MonoBehaviour
     {
         sfx_ = GetComponent<SFX>();
         characterController = GetComponent<CharacterController>();
-
-        // Ottieni i valori salvati nei PlayerPrefs
-        spawnPositionRefs = new Vector3(
-            PlayerPrefs.GetFloat("CheckpointPositionX", 0.0f), // Default a 0.0f se il valore non esiste
-            PlayerPrefs.GetFloat("CheckpointPositionY", 0.0f),
-            PlayerPrefs.GetFloat("CheckpointPositionZ", 0.0f)
-        );
-
-        // Controlla se i PlayerPrefs sono validi
-        if (spawnPositionRefs == Vector3.zero) // Nessun checkpoint salvato
-        {
-            transform.position = spawnPosition.position;
-
-            // Salva la posizione iniziale come checkpoint
-            PlayerPrefs.SetFloat("CheckpointPositionX", spawnPosition.position.x);
-            PlayerPrefs.SetFloat("CheckpointPositionY", spawnPosition.position.y);
-            PlayerPrefs.SetFloat("CheckpointPositionZ", spawnPosition.position.z);
-            PlayerPrefs.Save();
-        }
-        else // Posiziona il giocatore all'ultimo checkpoint salvato
-        {
-            transform.position = spawnPositionRefs;
-        }
-    }
-
-    private void OnEnable()
-    {
-        Save.OnSave += UpdateCheckpoint;
+        transform.position = spawnPosition.position;
 
     }
-    private void OnDestroy()
-    {
-        Save.OnSave -= UpdateCheckpoint;
-    }
+
     void Start()
     {
+        transform.position = spawnPosition.position;
 
         if (renderRoot != null)
             renderRoot.position -= transform.up * characterController.skinWidth;
@@ -154,12 +124,7 @@ public class PlayerControllerMover : MonoBehaviour
         }
 
     }
-    private void UpdateCheckpoint(Vector3 newCheckpoint)
-    {
-        // Update the current spawn position
-        spawnPositionRefs = newCheckpoint;
-        Debug.Log("Checkpoint updated to: " + spawnPosition);
-    }
+
 
     public void Move(Vector3 direction)
     {

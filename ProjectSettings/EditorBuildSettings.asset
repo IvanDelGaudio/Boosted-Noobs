@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Level 1 Hamza.unity
     guid: 5f0b0c95271ca1647b1a5d4d682530db
-  - enabled: 0
-    path: Assets/Scenes/New Folder/Level 02.unity
-    guid: 69d1e93b5bc24b040af724ec93e428c6
+  - enabled: 1
+    path: Assets/Scenes/New Folder/Level 2 Hamza.unity
+    guid: 6971c74d300f6d047b9bd52e2773667c
   m_configObjects: {}
