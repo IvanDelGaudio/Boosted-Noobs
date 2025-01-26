@@ -52,24 +52,27 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if(transform.position != Vector3.zero)
-        {
-            sfx.PlaySFX(0);
-            sfx.PlaySFX(1);
-        }
+        
         // Controlla lo stato del giocatore
         bool playerInPovRange = Physics.CheckSphere(transform.position, povRange, whatIsPlayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (transform.position != Vector3.zero && playerInPovRange)
+        {
 
+        }
         // Cambia stato in base alla posizione del giocatore
         if (playerInAttackRange)
         {
             currentState = EnemyState.Attacking;
             isAttacking = true;
-
+            sfx.PlaySFX(1);
+            sfx.audioSource.transform.SetParent(transform);
         }
         else if (playerInPovRange)
         {
+            sfx.PlaySFX(0);
+            sfx.audioSource.transform.SetParent(transform);
+
             isAttacking = false;
             currentState = EnemyState.Chasing;
         }
@@ -218,12 +221,12 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(player);
         //Debug.Log("Attaccando il giocatore.");
         //Invoke(nameof(ResetAttack), 1f); // Simula un intervallo tra gli attacchi
-        PlayerDie();
+        //PlayerDie();
     }
 
-    private void PlayerDie()
-    {
-    }
+    //private void PlayerDie()
+    //{
+    //}
 
 
     private void HandleStuck()

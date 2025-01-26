@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(SFX))]
 public class Generator : MonoBehaviour
 {
     [SerializeField]
@@ -32,10 +32,11 @@ public class Generator : MonoBehaviour
     private bool ChFuseBlue;
     private bool ChFuseGreen;
     private bool completedFuses;
+    private SFX sfx;
 
     private void Start()
     {
-
+        sfx = GetComponent<SFX>();
     }
 
     private void Update()
@@ -159,6 +160,7 @@ public class Generator : MonoBehaviour
     {
         if (FuseRed == true && FuseBlue == true && FuseGreen == true)
         {
+            sfx.PlaySFX(0);
             button.material =material;
             light.color = Color.green;
             key.requiredKey = true;
