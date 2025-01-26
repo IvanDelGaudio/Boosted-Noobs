@@ -61,7 +61,10 @@ public class KeyCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text="Press E";
+            if (!requiredKey)
+            {
+                text.text = "Press E";
+            }
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
             playerInRange = true;

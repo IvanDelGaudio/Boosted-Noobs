@@ -68,8 +68,9 @@ public class GameManager : MonoBehaviour
         Pause(gamOverPanel);
     }
 
-    public void RespawnCheckpoint()
+    public void Respawn()
     {
+        Resume();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
