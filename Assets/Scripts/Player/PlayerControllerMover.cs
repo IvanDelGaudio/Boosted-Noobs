@@ -13,6 +13,7 @@ public class PlayerControllerMover : MonoBehaviour
     {
         None, Movement, LookDirection
     }
+    public GameManager gameOver;
     private CharacterController characterController = null;
 
     [Header("Anchors")]
@@ -147,7 +148,7 @@ public class PlayerControllerMover : MonoBehaviour
 
     private void Die()
     {
-        gameover.GameOver();
+        gameOver.GameOver();
         
         Destroy(gameObject);
     }
