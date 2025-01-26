@@ -12,13 +12,13 @@ public class FakeKeyCheck : MonoBehaviour
     [SerializeField]
     Inventory.Item requiredItem;
     [SerializeField]
-    public Text text;
+    public GameObject text;
     public bool requiredKey = false;
     public LightManager light;
 
     private void Start()
     {
-        text.text = "";
+        text.SetActive(false);
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class FakeKeyCheck : MonoBehaviour
         {
             if (!requiredKey)
             {
-                text.text = "Press E";
+                text.SetActive(true);
             }
             RequiredItems(requiredItem);
             Debug.Log("Player has enter");
@@ -71,7 +71,7 @@ public class FakeKeyCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            text.text = "";
+            text.SetActive(false);
             Debug.Log("Player has exit");
             playerInRange = false;
         }

@@ -54,7 +54,7 @@ public class Buttonlevel1 : MonoBehaviour
     }
     private void ActiveButtonAnimation()
     {
-        if (Input.GetKeyUp(KeyCode.E) && playerInRange && endSound==true)
+        if (Input.GetKeyUp(KeyCode.E) && playerInRange)
         {
             aniButton.SetTrueAnimationbutton();
             button.ChangeColorButton1();
