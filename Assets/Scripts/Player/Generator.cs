@@ -33,6 +33,7 @@ public class Generator : MonoBehaviour
     private bool ChFuseGreen;
     private bool completedFuses;
     private SFX sfx;
+    public IconsManager FuseMenu;
 
     private void Start()
     {
@@ -168,6 +169,7 @@ public class Generator : MonoBehaviour
             lightManagere.ChangeColorButton2();
             Debug.Log("Luca ci uccide");
             completedFuses = true;
+            FuseMenu.UntoggleFuseIcon();
         }
     }
 }
