@@ -40,6 +40,7 @@ public class PlayerControllerMover : MonoBehaviour
     private SFX sfx_;
     private Vector3 initPositionPlayer;
     private Vector3 spawnPositionRefs;
+    public GameManager gameover;
 
     private bool isGrounded
     {
@@ -182,7 +183,7 @@ public class PlayerControllerMover : MonoBehaviour
 
     private void Die()
     {
-
+        gameover.GameOver();
         Destroy(gameObject);
     }
 
