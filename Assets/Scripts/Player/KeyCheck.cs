@@ -23,10 +23,11 @@ public class KeyCheck : MonoBehaviour
     public GameObject text;
     public bool requiredKey=false;
     private AnimationDoorController anim;
-    
+    private IconsManager keyMenu;
+
     private void Start()
     {
-    
+    keyMenu = GameObject.FindAnyObjectByType<IconsManager>();
     anim = GetComponent<AnimationDoorController>();
     }
 
@@ -76,6 +77,7 @@ public class KeyCheck : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.E) && doorOpenCheckKey == true && anim.controlOpenDoor == false)
         {
+                
                 CheckDoorKey();
         }
         
@@ -108,6 +110,7 @@ public class KeyCheck : MonoBehaviour
         requiredKey = RequiredItems(requiredItem);
         if (isdoorOpen == false && requiredKey == true )
         {
+            keyMenu.ToggleKeyIcon();
             anim.SetTrueStateOfTheDoor();
             isdoorOpen = true;
             isExit = true;
