@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
         gamOverPanel.SetActive(false);
         subPanel.SetActive(false);
         checkPointPanel.SetActive(false);
+
+        LockCursor();
     }
 
     private void Update()
@@ -47,6 +49,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1.0f;
         isPaused = false;
+
+        LockCursor();
     }
 
 
@@ -81,6 +85,8 @@ public class GameManager : MonoBehaviour
         ActivatePanel(panel);
         Time.timeScale = 0.0f;
         isPaused = true;
+
+        UnlockCursor();
     }
 
     private IEnumerator ActivateThenDeactivate(GameObject panel, float duration)
@@ -121,6 +127,18 @@ public class GameManager : MonoBehaviour
         {
             GoToMenu();
         }
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     #endregion
 }
