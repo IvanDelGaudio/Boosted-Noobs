@@ -25,8 +25,10 @@ using UnityEngine;
         void Awake()
         {
             cam = GetComponent<Camera>();
-        }
-        void LateUpdate()
+            Debug.Log($"Horizontal: {Input.GetAxis("Look Horizontal")}, Vertical: {Input.GetAxis("Look Vertical")}");
+
+    }
+    void LateUpdate()
         {
 
             currentVelocityAroundVertical = Mathf.MoveTowards(currentVelocityAroundVertical, 0, Time.deltaTime * padDrag.x);

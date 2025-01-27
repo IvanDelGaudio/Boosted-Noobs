@@ -60,6 +60,7 @@ public class PlayerControllerMover : MonoBehaviour
     void Start()
     {
         //transform.position = spawnPosition.position;
+        Debug.Log($"Horizontal: {Input.GetAxis("Horizontal")}, Vertical: {Input.GetAxis("Vertical")}");
 
         if (renderRoot != null)
             renderRoot.position -= transform.up * characterController.skinWidth;
