@@ -6,7 +6,11 @@ Programming
 - Increase the animation velocity of the button
 - When pause everything stopped
 - Bubble in the level 2 maze can move sometimes throught the wall
+
 Design
 - Close the door shortly after the first chase? 
+
+To Do:
+- Smoothing Camera
 
 
