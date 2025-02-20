@@ -1,0 +1,12 @@
+To Fix:
+Programming
+- Not collide in the initial console
+- When pressing multiple times "E" during the start scene will bug the door
+- The Bubble collide in the door after the first chase and it can kill you
+- Increase the animation velocity of the button
+- When pause everything stopped
+- Bubble in the level 2 maze can move sometimes throught the wall
+Design
+- Close the door shortly after the first chase? 
+
+
